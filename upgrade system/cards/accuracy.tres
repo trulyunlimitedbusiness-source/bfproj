@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="InvItem" format=3 uid="uid://cgs4b4lufdv6t"]
+
+[ext_resource type="Script" uid="uid://c3l6sti2a6aat" path="res://upgrade system/inventory_item.gd" id="1_6cfs7"]
+[ext_resource type="Texture2D" uid="uid://dptte6ge46h8w" path="res://upgrade system/sprites/icons/accuracy.png" id="2_xnh8u"]
+
+[resource]
+script = ExtResource("1_6cfs7")
+name = "accuracyicon"
+texture = ExtResource("2_xnh8u")
+card_sprite_frame = 5
+behavior_type = 2
+metadata/_custom_type_script = "uid://c3l6sti2a6aat"

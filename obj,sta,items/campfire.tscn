@@ -1,0 +1,190 @@
+[gd_scene format=3 uid="uid://bhkqpvymuai32"]
+
+[ext_resource type="Script" uid="uid://qutg1o4kbmji" path="res://obj,sta,items/campfire.gd" id="1_5njbr"]
+[ext_resource type="Texture2D" uid="uid://ccpg6j0kloa4n" path="res://obj,sta,items/campfire.png" id="1_rjc33"]
+[ext_resource type="Texture2D" uid="uid://dpg18gseg2w30" path="res://torch/sprites/torch.png" id="2_7pucp"]
+[ext_resource type="Shader" uid="uid://bwjfr4lwme3q0" path="res://obj,sta,items/extinguish.gdshader" id="2_aunut"]
+[ext_resource type="AudioStream" uid="uid://mw5krksvogid" path="res://obj,sta,items/sounds/fire_ignite.mp3" id="4_c3iuj"]
+[ext_resource type="FontFile" uid="uid://civest376hw7" path="res://ui/fonts/Pixel Digivolve.otf" id="4_jjvlf"]
+[ext_resource type="Texture2D" uid="uid://lhle1tlg2ccx" path="res://torch/sprites/torchburn.png" id="4_m0cge"]
+[ext_resource type="Texture2D" uid="uid://dtas1gaxnrmjq" path="res://torch/projectiles/shadow Copy.png" id="6_c3iuj"]
+[ext_resource type="Texture2D" uid="uid://bew5mvcok3cwv" path="res://player/shadow.png" id="8_aeess"]
+[ext_resource type="Texture2D" uid="uid://p6s2ju6xupxa" path="res://obj,sta,items/cl-Sheet.png" id="8_aunut"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5njbr"]
+atlas = ExtResource("1_rjc33")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjvlf"]
+atlas = ExtResource("1_rjc33")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3iuj"]
+atlas = ExtResource("1_rjc33")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ox10y"]
+atlas = ExtResource("1_rjc33")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aeess"]
+atlas = ExtResource("1_rjc33")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aunut"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5njbr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jjvlf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c3iuj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ox10y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aeess")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_04tbh"]
+atlas = ExtResource("2_7pucp")
+region = Rect2(96, 0, 24, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vceb8"]
+atlas = ExtResource("4_m0cge")
+region = Rect2(0, 0, 24, 37)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y6i1r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_04tbh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vceb8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m0cge"]
+size = Vector2(30, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rq8c4"]
+size = Vector2(38, 39)
+
+[sub_resource type="LabelSettings" id="LabelSettings_c3iuj"]
+font = ExtResource("4_jjvlf")
+font_size = 10
+font_color = Color(0.9607843, 0.76862746, 0.7529412, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jjvlf"]
+size = Vector2(13, 17)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aunut"]
+shader = ExtResource("2_aunut")
+shader_parameter/dark_cooldown_factor = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m0cge"]
+atlas = ExtResource("8_aunut")
+region = Rect2(0, 0, 34, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rq8c4"]
+atlas = ExtResource("8_aunut")
+region = Rect2(34, 0, 34, 33)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_04tbh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m0cge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rq8c4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Campfire" type="Area2D" unique_id=1464171953]
+collision_mask = 2
+script = ExtResource("1_5njbr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2009240440]
+z_index = 6
+position = Vector2(-3, -1.7881393e-07)
+scale = Vector2(0.625, 0.68750006)
+sprite_frames = SubResource("SpriteFrames_aunut")
+frame_progress = 0.9306091
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1782912138]
+z_index = 6
+position = Vector2(0.98823696, 6.5843883)
+rotation = 0.008726646
+scale = Vector2(0.8621856, 0.86677516)
+skew = -0.4886922
+sprite_frames = SubResource("SpriteFrames_y6i1r")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1969768789]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1622670543]
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_m0cge")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=115374546]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_rq8c4")
+
+[node name="ignite" type="AudioStreamPlayer2D" parent="." unique_id=1624797190]
+stream = ExtResource("4_c3iuj")
+volume_db = 8.0
+
+[node name="Label" type="Label" parent="." unique_id=911477421]
+offset_left = -27.0
+offset_top = -31.0
+offset_right = 27.0
+offset_bottom = -19.0
+text = "[e]"
+label_settings = SubResource("LabelSettings_c3iuj")
+horizontal_alignment = 1
+
+[node name="fire" type="Area2D" parent="." unique_id=1593188107]
+position = Vector2(-1, -5)
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="fire" unique_id=45242925]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_jjvlf")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=470558391]
+position = Vector2(-2.0000021, 2.3841858e-07)
+scale = Vector2(1.6249999, 1.6875001)
+texture = ExtResource("6_c3iuj")
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=50232328]
+z_index = -2
+position = Vector2(-0.49999988, 11)
+scale = Vector2(1.21875, 0.875)
+texture = ExtResource("8_aeess")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=1418835146]
+material = SubResource("ShaderMaterial_aunut")
+position = Vector2(-1.9999986, 2.250001)
+scale = Vector2(0.882353, 0.8636364)
+sprite_frames = SubResource("SpriteFrames_04tbh")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="body_entered" from="fire" to="." method="_on_fire_body_entered"]
+[connection signal="body_exited" from="fire" to="." method="_on_fire_body_exited"]

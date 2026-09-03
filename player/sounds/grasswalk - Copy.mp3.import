@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://w3tr8l0wuokk"
+path="res://.godot/imported/grasswalk - Copy.mp3-d8d493538d6fb386b713d98ebb0dc1b8.mp3str"
+
+[deps]
+
+source_file="res://player/sounds/grasswalk - Copy.mp3"
+dest_files=["res://.godot/imported/grasswalk - Copy.mp3-d8d493538d6fb386b713d98ebb0dc1b8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

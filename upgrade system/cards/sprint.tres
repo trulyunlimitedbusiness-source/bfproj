@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="InvItem" format=3 uid="uid://b2p3u7g8bn635"]
+
+[ext_resource type="Script" uid="uid://c3l6sti2a6aat" path="res://upgrade system/inventory_item.gd" id="1_3vbnr"]
+[ext_resource type="Texture2D" uid="uid://d007llqluqk3r" path="res://upgrade system/sprites/icons/speed.png" id="2_s7dyy"]
+
+[resource]
+script = ExtResource("1_3vbnr")
+name = "sprinticon"
+texture = ExtResource("2_s7dyy")
+behavior_type = 2
+metadata/_custom_type_script = "uid://c3l6sti2a6aat"

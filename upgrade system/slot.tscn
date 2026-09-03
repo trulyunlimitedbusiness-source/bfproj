@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bvcog7xwysvyv"]
+
+[ext_resource type="Texture2D" uid="uid://nd4te4lsxw3" path="res://upgrade system/sprites/icon.png" id="1_4wprj"]
+[ext_resource type="Script" uid="uid://c156ebuje31wl" path="res://upgrade system/slot.gd" id="1_5imhw"]
+
+[node name="Panel" type="Panel" unique_id=1928976634]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(64, 64)
+offset_right = 101.0
+offset_bottom = 105.0
+script = ExtResource("1_5imhw")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1498020530]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(51, 51.999996)
+scale = Vector2(6.375, 6.4999995)
+texture = ExtResource("1_4wprj")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1800956859]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_right = 102.0
+offset_bottom = 105.0
+
+[node name="Panel" type="Panel" parent="CenterContainer" unique_id=1868349520]
+layout_mode = 2
+
+[node name="item_display" type="Sprite2D" parent="CenterContainer/Panel" unique_id=895101740]
+scale = Vector2(6.8, 6.8)

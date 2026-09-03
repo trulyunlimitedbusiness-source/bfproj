@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://bu01twj1sshqm"]
+
+[ext_resource type="Script" uid="uid://culk48omvyu6b" path="res://torch/swipeparticles.gd" id="1_jnoi4"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fel26"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jnoi4"]
+load_path = "res://.godot/imported/fire.png-ae65b9fad36e7d4de79ac9f321e90689.ctex"
+
+[sub_resource type="Gradient" id="Gradient_knqnj"]
+offsets = PackedFloat32Array(0.2967033, 1)
+colors = PackedColorArray(0.89492244, 0.89492244, 0.8949224, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7d82x"]
+gradient = SubResource("Gradient_knqnj")
+
+[sub_resource type="Curve" id="Curve_q8se5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.516854), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_b8dnk"]
+curve = SubResource("Curve_q8se5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lekju"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0.06, 0.435, 0)
+emission_shape_scale = Vector3(2.075, 2.395, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 10.0
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 2, 0)
+scale_curve = SubResource("CurveTexture_b8dnk")
+color_ramp = SubResource("GradientTexture1D_7d82x")
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[node name="swipeparticles" type="Node2D" unique_id=1267141825]
+script = ExtResource("1_jnoi4")
+
+[node name="burning" type="GPUParticles2D" parent="." unique_id=734180257]
+z_index = -2
+material = SubResource("CanvasItemMaterial_fel26")
+emitting = false
+amount = 20
+texture = SubResource("CompressedTexture2D_jnoi4")
+lifetime = 0.5
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_lekju")

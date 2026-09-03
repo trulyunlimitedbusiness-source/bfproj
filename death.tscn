@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://dm1ucm66vy5u1"]
+
+[ext_resource type="Script" uid="uid://c1drbrfxu6g5l" path="res://death.gd" id="1_f0m10"]
+[ext_resource type="Texture2D" uid="uid://b1rnf6tkqucl4" path="res://ui/sprites/death.png" id="2_wmr2h"]
+[ext_resource type="FontFile" uid="uid://civest376hw7" path="res://ui/fonts/Pixel Digivolve.otf" id="3_56rgi"]
+[ext_resource type="Texture2D" uid="uid://bf3cq4gq25mki" path="res://ui/sprites/button.png" id="4_r6ms4"]
+[ext_resource type="Script" uid="uid://bjmvbksqdbnhl" path="res://b1.gd" id="5_jxpam"]
+[ext_resource type="Script" uid="uid://dcbu2hae5lpdq" path="res://bflabel.gd" id="6_56rgi"]
+[ext_resource type="AudioStream" uid="uid://bvkvmj23mcxx1" path="res://ui/sounds/soundreality-lighter-2-410607.wav" id="6_wmr2h"]
+[ext_resource type="Texture2D" uid="uid://di0lcqq1b64ir" path="res://enemy/sprites/attack.png" id="8_jxpam"]
+[ext_resource type="Texture2D" uid="uid://bew5mvcok3cwv" path="res://player/shadow.png" id="9_idukc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_idukc"]
+font = ExtResource("3_56rgi")
+font_size = 110
+font_color = Color(0.23115191, 0.0681461, 0.068157405, 1)
+outline_size = 28
+outline_color = Color(0.9647059, 0.76862746, 0.7529412, 1)
+
+[node name="death" type="CanvasLayer" unique_id=155497082]
+layer = 99
+script = ExtResource("1_f0m10")
+
+[node name="dnode" type="Control" parent="." unique_id=299602372]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="dnode" unique_id=150958880]
+z_index = 2
+layout_mode = 0
+offset_left = 314.0
+offset_top = 149.0
+offset_right = 1604.0
+offset_bottom = 925.0
+texture = ExtResource("2_wmr2h")
+
+[node name="b1" type="Button" parent="dnode/TextureRect" unique_id=606993488]
+layout_mode = 0
+offset_left = 805.0
+offset_top = 107.0
+offset_right = 1205.0
+offset_bottom = 298.0
+scale = Vector2(0.8, 0.8)
+theme_override_colors/font_color = Color(0.94864386, 0.68600845, 0.66843563, 1)
+theme_override_colors/font_pressed_color = Color(0.32156864, 0.078431375, 0.078431375, 1)
+theme_override_colors/font_hover_color = Color(0.84313726, 0.30588236, 0.29411766, 1)
+theme_override_fonts/font = ExtResource("3_56rgi")
+theme_override_font_sizes/font_size = 48
+text = "Restart"
+icon = ExtResource("4_r6ms4")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("5_jxpam")
+hover_scale = Vector2(1, 1)
+normal_scale = Vector2(0.8, 0.8)
+
+[node name="b2" type="Button" parent="dnode/TextureRect" unique_id=1003376872]
+layout_mode = 0
+offset_left = 807.0
+offset_top = 265.99997
+offset_right = 1207.0
+offset_bottom = 484.99997
+scale = Vector2(0.8, 0.8)
+theme_override_colors/font_color = Color(0.94864386, 0.68600845, 0.66843563, 1)
+theme_override_colors/font_pressed_color = Color(0.32156864, 0.078431375, 0.078431375, 1)
+theme_override_colors/font_hover_color = Color(0.84313726, 0.30588236, 0.29411766, 1)
+theme_override_fonts/font = ExtResource("3_56rgi")
+theme_override_font_sizes/font_size = 48
+text = "Settings"
+icon = ExtResource("4_r6ms4")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("5_jxpam")
+hover_scale = Vector2(1, 1)
+normal_scale = Vector2(0.8, 0.8)
+
+[node name="b3" type="Button" parent="dnode/TextureRect" unique_id=1932969580]
+layout_mode = 0
+offset_left = 808.0
+offset_top = 437.00003
+offset_right = 1208.0
+offset_bottom = 656.0
+scale = Vector2(0.8, 0.8)
+theme_override_colors/font_color = Color(0.94864386, 0.68600845, 0.66843563, 1)
+theme_override_colors/font_pressed_color = Color(0.32156864, 0.078431375, 0.078431375, 1)
+theme_override_colors/font_hover_color = Color(0.84313726, 0.30588236, 0.29411766, 1)
+theme_override_fonts/font = ExtResource("3_56rgi")
+theme_override_font_sizes/font_size = 48
+text = "Main Menu"
+icon = ExtResource("4_r6ms4")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("5_jxpam")
+hover_scale = Vector2(1, 1)
+normal_scale = Vector2(0.8, 0.8)
+
+[node name="Attack" type="Sprite2D" parent="dnode/TextureRect" unique_id=1099496176]
+z_index = 3
+position = Vector2(416, 425)
+scale = Vector2(16.218752, 14.515625)
+texture = ExtResource("8_jxpam")
+
+[node name="Shadow" type="Sprite2D" parent="dnode/TextureRect/Attack" unique_id=1370114727]
+z_index = -1
+position = Vector2(-0.092485696, 14.983851)
+scale = Vector2(0.63005763, 0.63509154)
+texture = ExtResource("9_idukc")
+
+[node name="deathlabel" type="Label" parent="dnode" unique_id=1438659016]
+z_index = 2
+layout_mode = 0
+offset_left = 406.725
+offset_top = 212.81
+offset_right = 1040.7253
+offset_bottom = 342.81006
+text = "Your Dead"
+label_settings = SubResource("LabelSettings_idukc")
+script = ExtResource("6_56rgi")
+peak_scale = Vector2(1.08, 1.08)
+pop_duration = 0.8
+max_tilt_degrees = 1.0
+
+[node name="click1" type="AudioStreamPlayer" parent="dnode" unique_id=391833514]
+stream = ExtResource("6_wmr2h")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=622588677]
+z_index = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.10427005, 0.01802348, 0.018039832, 0.47058824)
+
+[connection signal="pressed" from="dnode/TextureRect/b1" to="." method="_on_b_1_pressed"]
+[connection signal="pressed" from="dnode/TextureRect/b2" to="." method="_on_b_2_pressed"]
+[connection signal="pressed" from="dnode/TextureRect/b3" to="." method="_on_b_3_pressed"]

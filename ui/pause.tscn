@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://mljwlcsf8s1m"]
+
+[ext_resource type="Texture2D" uid="uid://begqh7k3jmqyc" path="res://ui/sprites/pause.png" id="1_iri2v"]
+[ext_resource type="Script" uid="uid://df0x2bdqkb8r1" path="res://ui/pause.gd" id="2_ltsnx"]
+[ext_resource type="FontFile" uid="uid://civest376hw7" path="res://ui/fonts/Pixel Digivolve.otf" id="3_71e5d"]
+[ext_resource type="Texture2D" uid="uid://bf3cq4gq25mki" path="res://ui/sprites/button.png" id="4_fhtog"]
+[ext_resource type="Script" uid="uid://bjmvbksqdbnhl" path="res://b1.gd" id="5_xceln"]
+[ext_resource type="AudioStream" uid="uid://bvkvmj23mcxx1" path="res://ui/sounds/soundreality-lighter-2-410607.wav" id="6_ltsnx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_d0mqy"]
+font = ExtResource("3_71e5d")
+font_size = 84
+font_color = Color(0.9490196, 0.6862745, 0.6666667, 1)
+
+[node name="Pause" type="CanvasLayer" unique_id=1589807966]
+process_mode = 3
+layer = 100
+script = ExtResource("2_ltsnx")
+
+[node name="menu" type="Control" parent="." unique_id=187403015]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="menu" unique_id=210085275]
+z_index = 5
+layout_mode = 0
+offset_left = 645.0
+offset_top = 106.0
+offset_right = 1287.0
+offset_bottom = 970.0
+texture = ExtResource("1_iri2v")
+
+[node name="b1" type="Button" parent="menu/TextureRect" unique_id=1588287286]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 208.0
+offset_right = 512.0
+offset_bottom = 399.0
+theme_override_colors/font_color = Color(0.94864386, 0.68600845, 0.66843563, 1)
+theme_override_colors/font_pressed_color = Color(0.32156864, 0.078431375, 0.078431375, 1)
+theme_override_colors/font_hover_color = Color(0.84313726, 0.30588236, 0.29411766, 1)
+theme_override_fonts/font = ExtResource("3_71e5d")
+theme_override_font_sizes/font_size = 48
+text = "Restart"
+icon = ExtResource("4_fhtog")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("5_xceln")
+hover_scale = Vector2(1.2, 1.2)
+
+[node name="b2" type="Button" parent="menu/TextureRect" unique_id=90068053]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 387.0
+offset_right = 516.0
+offset_bottom = 606.0
+theme_override_colors/font_color = Color(0.94864386, 0.68600845, 0.66843563, 1)
+theme_override_colors/font_pressed_color = Color(0.32156864, 0.078431375, 0.078431375, 1)
+theme_override_colors/font_hover_color = Color(0.84313726, 0.30588236, 0.29411766, 1)
+theme_override_fonts/font = ExtResource("3_71e5d")
+theme_override_font_sizes/font_size = 48
+text = "Settings"
+icon = ExtResource("4_fhtog")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("5_xceln")
+hover_scale = Vector2(1.2, 1.2)
+
+[node name="b3" type="Button" parent="menu/TextureRect" unique_id=516789759]
+layout_mode = 0
+offset_left = 119.0
+offset_top = 583.0
+offset_right = 519.0
+offset_bottom = 802.0
+theme_override_colors/font_color = Color(0.94864386, 0.68600845, 0.66843563, 1)
+theme_override_colors/font_pressed_color = Color(0.32156864, 0.078431375, 0.078431375, 1)
+theme_override_colors/font_hover_color = Color(0.84313726, 0.30588236, 0.29411766, 1)
+theme_override_fonts/font = ExtResource("3_71e5d")
+theme_override_font_sizes/font_size = 48
+text = "Main Menu"
+icon = ExtResource("4_fhtog")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("5_xceln")
+hover_scale = Vector2(1.2, 1.2)
+
+[node name="click1" type="AudioStreamPlayer" parent="menu" unique_id=1360774964]
+stream = ExtResource("6_ltsnx")
+
+[node name="Label" type="Label" parent="menu" unique_id=1631797365]
+z_index = 5
+layout_mode = 0
+offset_left = 798.0
+offset_top = 188.0
+offset_right = 1309.0
+offset_bottom = 364.0
+text = "Paused"
+label_settings = SubResource("LabelSettings_d0mqy")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=247695418]
+z_index = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.10427005, 0.01802348, 0.018039832, 0.47058824)
+
+[connection signal="pressed" from="menu/TextureRect/b1" to="." method="_on_b_1_pressed"]
+[connection signal="pressed" from="menu/TextureRect/b2" to="." method="_on_b_2_pressed"]
+[connection signal="pressed" from="menu/TextureRect/b3" to="." method="_on_b_3_pressed"]

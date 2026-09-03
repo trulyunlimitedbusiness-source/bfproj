@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cmss7estr0h0n"]
+
+[ext_resource type="Texture2D" uid="uid://bsuojhabpk8vn" path="res://tiles/placeholder.png" id="1_74106"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ctx8c"]
+texture = ExtResource("1_74106")
+0:0/0 = 0
+0:0/0/z_index = 4
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_xof88"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_ctx8c")
+
+[node name="TileMap" type="TileMap" unique_id=1613381981]
+z_index = -1
+tile_set = SubResource("TileSet_xof88")
+format = 2

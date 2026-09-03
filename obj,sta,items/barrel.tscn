@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://b14yjglw3q0to"]
+
+[ext_resource type="Script" uid="uid://djw2cm6b2lxvc" path="res://obj,sta,items/barrel.gd" id="1_gnfmf"]
+[ext_resource type="Texture2D" uid="uid://bp6sinpuivxij" path="res://obj,sta,items/barrel.png" id="1_uif0n"]
+[ext_resource type="FontFile" uid="uid://civest376hw7" path="res://ui/fonts/Pixel Digivolve.otf" id="2_dj60k"]
+[ext_resource type="Texture2D" uid="uid://bew5mvcok3cwv" path="res://player/shadow.png" id="3_7kahv"]
+[ext_resource type="Texture2D" uid="uid://dtas1gaxnrmjq" path="res://torch/projectiles/shadow Copy.png" id="4_1px3n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dj60k"]
+atlas = ExtResource("1_uif0n")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kahv"]
+atlas = ExtResource("1_uif0n")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1px3n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dj60k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kahv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7kahv"]
+size = Vector2(14, 23)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uif0n"]
+size = Vector2(28, 37)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1px3n"]
+font = ExtResource("2_dj60k")
+font_size = 8
+font_color = Color(0.9607843, 0.76862746, 0.7529412, 1)
+
+[node name="barrel" type="Area2D" unique_id=1026673496]
+script = ExtResource("1_gnfmf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=249452140]
+position = Vector2(-1.847744e-06, -6.854534e-07)
+scale = Vector2(0.625, 0.6666667)
+sprite_frames = SubResource("SpriteFrames_1px3n")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1464244359]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=2135753683]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_7kahv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=878185984]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_uif0n")
+
+[node name="Label" type="Label" parent="." unique_id=1268113996]
+offset_left = -6.0
+offset_top = -33.0
+offset_right = 10.0
+offset_bottom = -21.0
+text = "[E]"
+label_settings = SubResource("LabelSettings_1px3n")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1146052919]
+z_index = -1
+position = Vector2(-2.9802322e-07, 9)
+scale = Vector2(0.8125, 1.0625)
+texture = ExtResource("3_7kahv")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2050701412]
+z_index = -2
+position = Vector2(0, -2.9802322e-07)
+scale = Vector2(1.2500001, 1.3125001)
+energy = 0.7
+texture = ExtResource("4_1px3n")
