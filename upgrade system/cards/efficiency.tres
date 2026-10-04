@@ -8,5 +8,8 @@ script = ExtResource("1_hqxvr")
 name = "efficiencyicon"
 texture = ExtResource("2_ke2ug")
 card_sprite_frame = 7
-behavior_type = 2
+description = "Efficiency: 
+
+Torch takes 15% less 
+fuel"
 metadata/_custom_type_script = "uid://c3l6sti2a6aat"

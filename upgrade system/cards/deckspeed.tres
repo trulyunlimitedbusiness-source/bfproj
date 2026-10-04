@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="InvItem" format=3 uid="uid://dfkpeyv238b46"]
+
+[ext_resource type="Script" uid="uid://c3l6sti2a6aat" path="res://upgrade system/inventory_item.gd" id="1_x2oed"]
+[ext_resource type="Texture2D" uid="uid://vh1ac85pow7t" path="res://upgrade system/sprites/icons/deckspeed.png" id="2_xtue6"]
+
+[resource]
+script = ExtResource("1_x2oed")
+name = "deckspeedicon"
+texture = ExtResource("2_xtue6")
+card_sprite_frame = 12
+description = "Deck Speed: 
+
+Both hands of the deck 
+play 1.5x faster"
+metadata/_custom_type_script = "uid://c3l6sti2a6aat"

@@ -8,5 +8,8 @@ script = ExtResource("1_xsoqp")
 name = "multishoticon"
 texture = ExtResource("2_l3fc1")
 card_sprite_frame = 8
-behavior_type = 2
+description = "Multishot: 
+
+Shoots 1 more 
+projectile"
 metadata/_custom_type_script = "uid://c3l6sti2a6aat"

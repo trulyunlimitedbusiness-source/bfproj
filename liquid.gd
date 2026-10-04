@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-# 🔗 REQUIRED NODES (Ensure these names match your Enemy scene tree columns exactly)
+# 🔗 REQUIRED NODES
 @onready var body_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var nav_agent: NavigationAgent2D = $NavAgent
 @onready var damage_audio: AudioStreamPlayer2D = $damage
@@ -16,11 +16,17 @@ var hit_bounce_tween: Tween = null
 
 enum state {attack, move}
 const ATTACK_RANGE: float = 14.0
-const attack_tick_rate: float = 0.5
+const attack_tick_rate: float = 0.75
 var current_state: state = state.move
 var attack_timer: float = 0.0
 const DAMAGE_FONT = preload("res://ui/fonts/Pixel Digivolve.otf")
 var is_dead: bool = false
+
+# 🧠 FLOCKING & VARIATION (FIXES ROBOTIC MOVEMENT)
+var target_offset: Vector2 = Vector2.ZERO
+var path_update_timer: float = 0.0
+var path_update_interval: float = 0.2
+var actual_speed: float = 90.0
 
 # 💥 COMBAT FEEL SETTINGS (KNOCKBACK & HIT-STOP)
 const KNOCKBACK_FORCE: float = 10.0
@@ -45,10 +51,23 @@ func _ready() -> void:
 	health = max_health
 	add_to_group("enemies")
 	
-	# Generate a tiny randomized size variance factor
+	# 1. Scale Variance
 	var random_multiplier: float = randf_range(0.9, 1.1)
 	scale = Vector2(random_multiplier, random_multiplier)
 	pre_squish_scale = scale
+
+	# 2. Speed Variance (Enemies walk at slightly different speeds)
+	actual_speed = speed * randf_range(0.85, 1.15)
+
+	# 3. Target Offset (Each enemy aims for a different spot around the player)
+	target_offset = Vector2(randf_range(-40.0, 40.0), randf_range(-40.0, 40.0))
+
+	# 4. Path Update Stagger (Prevents all enemies from updating paths on the exact same frame)
+	path_update_interval = randf_range(0.15, 0.35)
+
+	# 🧭 Connect Avoidance
+	if is_instance_valid(nav_agent):
+		nav_agent.velocity_computed.connect(_on_nav_agent_velocity_computed)
 
 func _physics_process(delta: float) -> void:
 	if is_dead: 
@@ -62,7 +81,7 @@ func _physics_process(delta: float) -> void:
 			if is_instance_valid(body_sprite) and body_sprite.material:
 				body_sprite.material.set_shader_parameter("flash_modifier", 0.0)
 				
-	# 📡 B. SECURITY HOOK: Locate player dynamically via global variables
+	# 📡 B. SECURITY HOOK
 	if globals.player == null:
 		globals.player = get_tree().current_scene.find_child("player", true, false) as CharacterBody2D
 		return
@@ -89,42 +108,52 @@ func _physics_process(delta: float) -> void:
 			attack_timer = 0.0
 			if body_sprite and body_sprite.animation != "walk":
 				body_sprite.play("walk")
-			nav_agent.target_position = globals.player.global_position
+
+			# 🎲 PATH RECALCULATION TIMING (Staggered updates to reduce CPU strain & create natural curves)
+			path_update_timer -= delta
+			if path_update_timer <= 0.0:
+				path_update_timer = path_update_interval
+				
+				# If close to player, collapse the offset so they close in for the attack
+				var current_offset = target_offset if distance_to_player > 60.0 else Vector2.ZERO
+				nav_agent.target_position = globals.player.global_position + current_offset
+
 			direction = global_position.direction_to(nav_agent.get_next_path_position())
+			
 			if nav_agent.is_target_reached() == false:
-				var chase_velocity = velocity.lerp(direction * speed, delta)
-				knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, KNOCKBACK_FRICTION * speed * delta)
-				velocity = chase_velocity + knockback_velocity
-				move_and_slide()
+				var desired_velocity = direction * actual_speed
+				if nav_agent.avoidance_enabled:
+					nav_agent.set_velocity(desired_velocity)
+				else:
+					_apply_movement(desired_velocity, delta)
 				
 		state.attack:
 			if body_sprite and body_sprite.animation != "attack":
 				body_sprite.play("attack")
-			knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, KNOCKBACK_FRICTION * speed * 10.0 * delta)
+			knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, KNOCKBACK_FRICTION * actual_speed * 10.0 * delta)
 			velocity = knockback_velocity
 			move_and_slide()
 			
-			# ⚔️ CONTINUOUS ATTACK TICK GATE
 			attack_timer -= delta
 			if attack_timer <= 0.0:
 				strike_player()
 				attack_timer = attack_tick_rate
 
+# 🧭 AVOIDANCE CALLBACK FUNCTION
+func _on_nav_agent_velocity_computed(safe_velocity: Vector2) -> void:
+	var delta = get_physics_process_delta_time()
+	_apply_movement(safe_velocity, delta)
+
+func _apply_movement(target_velocity: Vector2, delta: float) -> void:
+	var chase_velocity = velocity.lerp(target_velocity, delta * 10.0)
+	knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, KNOCKBACK_FRICTION * actual_speed * delta)
+	velocity = chase_velocity + knockback_velocity
+	move_and_slide()
+
 func strike_player() -> void:
-	# =========================================================================
-	# 🛡️ THE GLOBAL HIT REGULATOR (UNIFIED SWARM PROTECTION SHIELD)
-	# 💡 FIXED: This ignores individual enemy clocks entirely! The moment the player
-	# absorbs damage, a single global lock shuts out the whole room for 0.8s.
-	# =========================================================================
 	if globals.player_can_be_damaged and globals.player and globals.player.has_method("damage"):
-		# 1. Instantly flip the global master switch to close the room's hit gates!
 		globals.player_can_be_damaged = false
-		
-		# 2. Inflict your normal damage packet safely straight into the player script
 		globals.player.damage(20.0)
-		
-		# 3. Create a clean, independent scene tree timer to reset the global gate
-		# Match this value exactly to your attack_tick_rate (0.8 seconds)
 		get_tree().create_timer(attack_tick_rate).timeout.connect(func():
 			globals.player_can_be_damaged = true
 		)
@@ -150,11 +179,6 @@ func take_damage(amount: float, bullet_direction: Vector2 = Vector2.ZERO) -> voi
 	if ehb:
 		ehb.value = health
 		
-	# =========================================================================
-	# 📳 THE FLAT INDENTATION-SAFE HEALTH BAR JUICE SHAKER
-	# 💡 FIXED: Completely removed the broken lambda function to guarantee 
-	# 100% stable indentation parsing and clean compiling!
-	# =========================================================================
 	var original_bar_x = ehb.position.x
 	var bar_shake = create_tween()
 	bar_shake.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
@@ -182,18 +206,12 @@ func take_damage(amount: float, bullet_direction: Vector2 = Vector2.ZERO) -> voi
 		camera.add_shake(2.5)
 		
 	const SHRINK_RATE: float = 0.48  
-
-# Establish your absolute baseline thresholds using our clamp logic blocks
 	const MAX_SCALE_CEILING: float = 1.0
 	const MIN_SCALE_FLOOR: float = 0.3
 
-# =========================================================================
-# 🧬 BALANCED HEALTH DECAY CONVERTER
-# =========================================================================
 	var base_damage_taken = 100.0 - health
 	var total_shrink_applied = (base_damage_taken / 100.0) * SHRINK_RATE
 
-# Subtract the adjusted shrink from 1.0, and clamp it inside your safety walls
 	var current_scale_target = 1.0 - total_shrink_applied
 	var health_percent: float = clamp(current_scale_target, MIN_SCALE_FLOOR, MAX_SCALE_CEILING)
 	var true_target_resting_scale = Vector2(health_percent, health_percent)
@@ -203,21 +221,15 @@ func take_damage(amount: float, bullet_direction: Vector2 = Vector2.ZERO) -> voi
 	
 	hit_bounce_tween = create_tween()
 
-# =========================================================================
-# 💥 THE STATIC MULTI-HIT ARCADE POP
-# =========================================================================
 	var squish_out = Vector2(true_target_resting_scale.x + 0.40, true_target_resting_scale.y - 0.40)
 	var stretch_up = Vector2(true_target_resting_scale.x - 0.15, true_target_resting_scale.y + 0.20)
 
-# STEP 1: Flatten out wide like a pancake instantly on impact frame (0.05s)
 	hit_bounce_tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	hit_bounce_tween.tween_property(self, "scale", squish_out, 0.05)
 
-# STEP 2: Spring upward tall and thin past center on the recoil bounce (0.06s)
 	hit_bounce_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	hit_bounce_tween.tween_property(self, "scale", stretch_up, 0.06)
 
-# STEP 3: Decaying pull back to your customized target resting size (0.10s)
 	hit_bounce_tween.tween_property(self, "scale", true_target_resting_scale, 0.10)
 
 func trigger_hit_stop() -> void:

@@ -13,7 +13,7 @@ extends Camera2D
 @export var TILT_SPEED: float = 8.0            
 
 @export_group("Gun Zoom Kickback")
-@export var BASE_ZOOM_LEVEL: float = 4.5     # 🔍 Your normal, default camera zoom level
+@export var BASE_ZOOM_LEVEL: float = 4.3     # 🔍 Your normal, default camera zoom level
 @export var KICKBACK_ZOOM_BUMP: float = 0.25 # 💥 How hard the camera snaps inward when firing (e.g. 0.15 means zoom becomes 1.15)
 @export var ZOOM_RECOVERY_SPEED: float = 12.0 # 🔄 How fast the camera glides back to normal view (higher is snappier)
 

@@ -151,12 +151,26 @@ stream = ExtResource("4_c3iuj")
 volume_db = 8.0
 
 [node name="Label" type="Label" parent="." unique_id=911477421]
-offset_left = -27.0
+offset_left = -36.0
 offset_top = -31.0
-offset_right = 27.0
+offset_right = 18.0
 offset_bottom = -19.0
 text = "[e]"
 label_settings = SubResource("LabelSettings_c3iuj")
+horizontal_alignment = 1
+
+[node name="Label2" type="RichTextLabel" parent="." unique_id=392269005]
+z_index = 2
+texture_filter = 1
+offset_left = 1.0
+offset_top = -29.0
+offset_right = 64.21839
+offset_bottom = 14.678162
+scale = Vector2(0.23, 0.23)
+theme_override_colors/default_color = Color(1, 0.61223423, 0.5700319, 1)
+theme_override_fonts/normal_font = ExtResource("4_jjvlf")
+theme_override_fonts/bold_font = ExtResource("4_jjvlf")
+theme_override_font_sizes/normal_font_size = 14
 horizontal_alignment = 1
 
 [node name="fire" type="Area2D" parent="." unique_id=1593188107]

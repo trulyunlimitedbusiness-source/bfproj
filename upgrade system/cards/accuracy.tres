@@ -8,5 +8,8 @@ script = ExtResource("1_6cfs7")
 name = "accuracyicon"
 texture = ExtResource("2_xnh8u")
 card_sprite_frame = 5
-behavior_type = 2
+description = "Accuracy: 
+
+Projectiles are slightly 
+more accurate by 15%"
 metadata/_custom_type_script = "uid://c3l6sti2a6aat"

@@ -9,4 +9,9 @@ name = "rangedicon"
 texture = ExtResource("2_x83jd")
 card_sprite_frame = 2
 attack_method_name = "shoot"
+description = "Ranged: 
+
+Basic projectile
+attack, shoots narrow 
+fireballs"
 metadata/_custom_type_script = "uid://c3l6sti2a6aat"

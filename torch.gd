@@ -6,6 +6,7 @@ extends Node2D
 var has_billed_heat_this_swipe: bool = false # 🔒 Prevents duplicate heat billing frames
 var is_overheat_locked: bool = false # 🔒 True = Ventilation broken, heat is permanent!
 var SWIPE_TRAIL_SCENE = preload("res://torch/melee.tscn")
+@onready var tex_rect = $UiLayer/overheat/TextureRect
 
 @export_group("Overheat Metrics")
 @export var MAX_OVERHEAT: float = 100.0
@@ -39,9 +40,9 @@ var is_burning = false
 var can_shoot = true
 
 # Visual animation phase ratios
-const SWING_RATIO: float = 0.20
-const FREEZE_RATIO: float = 0.62
-const RECOVERY_RATIO: float = 0.22
+var SWING_RATIO: float = 0.20
+var FREEZE_RATIO: float = 0.62
+var RECOVERY_RATIO: float = 0.22
 
 # Combat State Process Variables
 var attack_life_timer: float = 0.0
@@ -58,7 +59,7 @@ var time_passed: float = 0.0
 # =========================================================================
 @export_group("Kinetic Mouse Swipe")
 @export var SWIPE_VELOCITY_THRESHOLD: float = 1200.0 # ⚡ Pixels/Sec required to trigger a slice
-@export var SWIPE_DAMAGE: float = 18.0               # Base damage dealt by manual swipe
+@export var SWIPE_DAMAGE: float = 25.0               # Base damage dealt by manual swipe
 @export var SWIPE_PARTICLE_BOOST: float = 5.0        # How large the flame swells mid-swipe
 
 @export var MELEE_SWING_RATIO: float = 0.18
@@ -161,6 +162,10 @@ func _process(delta: float) -> void:
 		
 	if is_instance_valid(overheat):
 		overheat.value = current_overheat_value
+
+		# --- 💥 DYNAMIC BALATRO SHADER FEEDBACK ---
+		_update_overheat_shader_intensity()
+
 		if current_overheat_value >= MAX_OVERHEAT:
 			if overheat.pivot_offset == Vector2.ZERO:
 				overheat.pivot_offset = overheat.size / 2.0
@@ -639,3 +644,23 @@ func is_melee_card_equipped() -> bool:
 				if ui_node.inv.items[i].card_sprite_frame == 3:
 					return true
 	return false
+func _update_overheat_shader_intensity() -> void:
+	if not is_instance_valid(overheat):
+		return
+		
+	var shader_mat = tex_rect.material as ShaderMaterial
+	if not is_instance_valid(shader_mat):
+		return
+
+	if is_burning:
+		# Set exact active values from inspector
+		shader_mat.set_shader_parameter("fire_alpha", 1.0)
+		shader_mat.set_shader_parameter("fire_speed", Vector2(0.0, 1.3))
+		shader_mat.set_shader_parameter("fire_aperture", 0.45)
+		shader_mat.set_shader_parameter("horizontal_scale", 3.2)
+		shader_mat.set_shader_parameter("pixel_grid_size", 140.0)
+		shader_mat.set_shader_parameter("enable_pixelation", true)
+	else:
+		# Completely deactivate fire when not burning
+		shader_mat.set_shader_parameter("fire_alpha", 0.0)
+		shader_mat.set_shader_parameter("fire_speed", Vector2.ZERO)

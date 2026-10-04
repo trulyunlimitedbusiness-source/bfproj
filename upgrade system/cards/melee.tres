@@ -9,4 +9,8 @@ name = "meleeicon"
 texture = ExtResource("2_g0l4v")
 card_sprite_frame = 3
 attack_method_name = "execute_melee_swipe_action"
+description = "Melee: 
+
+70 degree melee torch
+swipe (25 damage)"
 metadata/_custom_type_script = "uid://c3l6sti2a6aat"

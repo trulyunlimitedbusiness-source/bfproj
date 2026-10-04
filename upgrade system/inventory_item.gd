@@ -10,3 +10,4 @@ class_name InvItem
 # 💡 FIXED: This adds a text box inside your Inspector panel for every card!
 # =========================================================================
 @export var attack_method_name: String = ""
+@export_multiline var description: String = "" # Adds a multi-line text box in the Inspector

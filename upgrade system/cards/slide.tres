@@ -8,5 +8,9 @@ script = ExtResource("1_d68ak")
 name = "slideicon"
 texture = ExtResource("2_nwtua")
 card_sprite_frame = 10
-behavior_type = 2
+description = "Slide: 
+
+Makes player have 
+a slippery slide 
+(increases by 1.5x)"
 metadata/_custom_type_script = "uid://c3l6sti2a6aat"

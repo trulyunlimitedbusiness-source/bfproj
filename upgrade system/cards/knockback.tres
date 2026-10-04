@@ -8,5 +8,9 @@ script = ExtResource("1_a33f0")
 name = "knockbackicon"
 texture = ExtResource("2_dqbrm")
 card_sprite_frame = 9
-behavior_type = 2
+description = "Player Knockback: 
+
+Player knockback is 
+increased by 1.5x for 
+some reason"
 metadata/_custom_type_script = "uid://c3l6sti2a6aat"

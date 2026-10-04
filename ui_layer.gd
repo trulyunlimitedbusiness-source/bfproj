@@ -1,6 +1,6 @@
 extends CanvasLayer
-@onready var left_hud_box: VBoxContainer = $GameplayDeckHUD/LeftHandHUD
-@onready var right_hud_box: VBoxContainer = $GameplayDeckHUD/RightHandHud
+@onready var left_hud_box: Control = $GameplayDeckHUD/LeftHandHUD
+@onready var right_hud_box: Control = $GameplayDeckHUD/RightHandHud
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

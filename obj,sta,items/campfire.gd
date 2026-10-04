@@ -15,11 +15,13 @@ var targets_in_fire: Array[Node2D] = []
 var damage_timestamps: Dictionary = {} 
 const FLAME_DAMAGE_TICK_RATE: float = 0.45 
 const FLAME_DAMAGE_AMOUNT: float = 8.0 
+var pyrite_cost = 7
 
 func _ready() -> void:
 	tsprite.visible = false
 	in_range = false
 	$Label.visible = false
+	$Label2.visible = false
 	is_used = false
 	cooldown_timer = 0.0
 	globals.campfire = self
@@ -53,6 +55,8 @@ func _process(delta: float) -> void:
 			if in_range:
 				$Label.text = "[E]"
 				$Label.visible = true
+				$Label2.text = "-" + str(pyrite_cost) + "pyrites"
+				$Label2.visible = true
 
 	if in_range and not is_used:
 		if Input.is_action_pressed("interact"):
@@ -90,19 +94,23 @@ func _on_body_entered(body: Node2D) -> void:
 			$Label.text = "Can't ignite yet"
 		else:
 			$Label.text = "[E]"
+			$Label2.text = "-" + str(pyrite_cost) + " pyrites"
 			if is_instance_valid(logs):
 				logs.frame = 1
 		$Label.visible = true
+		$Label2.visible = true
 
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		in_range = false
 		$Label.visible = false
+		$Label2.visible = false
 		if is_instance_valid(logs):
 			logs.frame = 0
 
 func use() -> void:
 	$Label.visible = false
+	$Label2.visible = false
 	
 	# Block torch controls while refuelling so players can't fire ghost projectiles
 	if is_instance_valid(globals.torch):
@@ -165,6 +173,7 @@ func use() -> void:
 		$Label.add_theme_font_size_override("font_size", 6)
 		$Label.text = "Can't refuel yet"
 		$Label.visible = true
+		$Label2.visible = true
 	
 	# =========================================================================
 	# 📈 FUEL BAR CELEBRATORY RESETS & TILT JUICE

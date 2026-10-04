@@ -8,5 +8,8 @@ script = ExtResource("1_gihfm")
 name = "asicon"
 texture = ExtResource("2_rls6x")
 card_sprite_frame = 11
-behavior_type = 2
+description = "Attack Size: 
+
+Changes size of the torch 
+and all attacks by 1.5x"
 metadata/_custom_type_script = "uid://c3l6sti2a6aat"

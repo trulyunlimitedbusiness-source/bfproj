@@ -294,6 +294,9 @@ position = Vector2(0, 3.5)
 shape = SubResource("RectangleShape2D_d5crr")
 
 [node name="NavAgent" type="NavigationAgent2D" parent="." unique_id=1947070975]
+avoidance_enabled = true
+radius = 3.0
+max_speed = 90.0
 
 [node name="damage" type="AudioStreamPlayer2D" parent="." unique_id=574325538]
 stream = ExtResource("4_atk72")

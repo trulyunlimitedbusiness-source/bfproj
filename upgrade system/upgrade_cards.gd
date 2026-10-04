@@ -64,6 +64,8 @@ func collect_item() -> void:
 			picked_up_card.name = "Slide"
 		elif $AnimatedSprite2D.frame == 11:
 			picked_up_card.name = "Attack Size"
+		elif $AnimatedSprite2D.frame == 12:
+			picked_up_card.name = "Deck Speed"
 			
 		# =========================================================================
 		# 🎒 STORAGE DECK INGESTION ARRAY PASS
@@ -75,7 +77,7 @@ func collect_item() -> void:
 			if ui_manager_node.inv.items[i] == null:
 				ui_manager_node.inv.items[i] = picked_up_card
 				insert_success = true
-				break # Stop loop processing once a home is locked in!
+				break
 
 		# Force a visual panel layout redraw if the card was successfully tucked away
 		if insert_success and ui_manager_node.has_method("update_slots"):

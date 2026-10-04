@@ -67,7 +67,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if iao: return
 	var camera = get_tree().get_first_node_in_group("camera")
 	# 🤖 ENEMY HIT DETECTION
-	if body.has_method("take_damage"):
+	if body and body.has_method("take_damage"):
 		body.take_damage(globals.torch.damage)
 		animating_out() # Instantly dissolve on contact
 		return

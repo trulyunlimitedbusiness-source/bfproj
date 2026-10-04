@@ -8,5 +8,8 @@ script = ExtResource("1_e4ef7")
 name = "damageicon"
 texture = ExtResource("2_8e3my")
 card_sprite_frame = 1
-behavior_type = 2
+description = "Damage: 
+
+Increases damage by 
+1.5x"
 metadata/_custom_type_script = "uid://c3l6sti2a6aat"

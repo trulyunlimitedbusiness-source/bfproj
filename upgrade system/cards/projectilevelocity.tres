@@ -8,5 +8,8 @@ script = ExtResource("1_pbqe1")
 name = "projvelicon"
 texture = ExtResource("2_bqb4v")
 card_sprite_frame = 4
-behavior_type = 2
+description = "Projectile Velocity: 
+
+Projectiles travel
+1.5x faster"
 metadata/_custom_type_script = "uid://c3l6sti2a6aat"

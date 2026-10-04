@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://dfur7jb2ne18e" path="res://upgrade system/sprites/icons/knockback.png" id="11_g36yt"]
 [ext_resource type="Texture2D" uid="uid://bbbh2sbbxch6l" path="res://upgrade system/sprites/icons/slide.png" id="12_4sxa2"]
 [ext_resource type="Texture2D" uid="uid://dytwq3rc50mt0" path="res://upgrade system/sprites/icons/attack size.png" id="13_jt0nx"]
+[ext_resource type="Texture2D" uid="uid://vh1ac85pow7t" path="res://upgrade system/sprites/icons/deckspeed.png" id="14_m8ybe"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g8dt1"]
 animations = [{
@@ -52,6 +53,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("13_jt0nx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_m8ybe")
 }],
 "loop": true,
 "name": &"default",
@@ -610,10 +614,12 @@ font_size = 10
 font_color = Color(0.9626779, 0.76782185, 0.7534287, 1)
 
 [node name="UpgradeCards" type="Area2D" unique_id=101113143]
+z_index = -1
 collision_mask = 2
 script = ExtResource("1_g8dt1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1235150108]
+z_index = -1
 scale = Vector2(2.25, 2.321)
 sprite_frames = SubResource("SpriteFrames_g8dt1")
 

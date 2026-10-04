@@ -9,6 +9,7 @@ var is_used = false
 const RECHARGE_TIME_SECONDS: float = 10.0 # 2 minutes exact clock duration
 var cooldown_timer: float = 0.0
 var health_cost = 1.0
+var health_text = 10
 @onready var tsprite = $Sprite2D
 
 func _ready() -> void:
@@ -16,6 +17,7 @@ func _ready() -> void:
 	tsprite.visible = false
 	in_range = false
 	$Label.visible = false
+	$Label2.visible = false
 	is_used = false
 	cooldown_timer = 0.0
 	
@@ -47,6 +49,8 @@ func _process(delta: float) -> void:
 			if in_range:
 				$Label.text = "[E]"
 				$Label.visible = true
+				$Label2.text = "-" + str(health_text) + " health"
+				$Label2.visible = true
 
 	if in_range and not is_used:
 		if Input.is_action_pressed("interact"):
@@ -62,20 +66,23 @@ func _on_body_entered(body: Node2D) -> void:
 			$Label.text = "Can't extinguish yet"
 		else:
 			$Label.text = "[E]"
+			$Label2.text = "-" + str(health_text) + " health"
 			if is_instance_valid(exsprite):
 				exsprite.frame = 1
 		$Label.visible = true
+		$Label2.visible = true
 
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		in_range = false
 		$Label.visible = false
+		$Label2.visible = false
 		if is_instance_valid(exsprite):
 			exsprite.frame = 0
 
 func use() -> void:
 	$Label.visible = false
-	
+	$Label2.visible = false
 	# =========================================================================
 	# 🔒 THE AIRTIGHT INPUT LOCKOUT ENGINE
 	# =========================================================================
@@ -96,7 +103,8 @@ func use() -> void:
 	$extinguish.pitch_scale = randf_range(0.4, 0.6)
 	$extinguish.play()
 	globals.camera.add_shake(3.8)
-	globals.player.damage(health_cost)
+	if globals.player != null:
+		globals.player.damage(health_cost)
 	
 	# Hard clear any residue lean angles left over from older tests
 	tsprite.rotation = 0.0
@@ -146,10 +154,10 @@ func use() -> void:
 	is_used = true
 	# If the player is STILL standing inside the zone right as the swap ends, instantly show text
 	if in_range:
-		$Label.add_theme_font_size_override("font_size", 6)
+		$Label.add_theme_font_size_override("font_size", 2)
 		$Label.text = "Can't extinguish yet"
 		$Label.visible = true
-		
+		$Label2.visible = true
 	# =========================================================================
 	# 📈 OVERHEAT BAR CELEBRATORY RESETS & TILT JUICE
 	# =========================================================================

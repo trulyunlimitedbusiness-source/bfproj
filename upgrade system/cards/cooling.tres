@@ -8,5 +8,7 @@ script = ExtResource("1_st356")
 name = "coolingicon"
 texture = ExtResource("2_mus0y")
 card_sprite_frame = 6
-behavior_type = 2
+description = "Cooling: 
+
+Torch overheats 15% less"
 metadata/_custom_type_script = "uid://c3l6sti2a6aat"
