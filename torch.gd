@@ -96,6 +96,9 @@ var projectile_size: Vector2 = Vector2(1.0, 1.0)
 var enemies_currently_overlapping: Array[CharacterBody2D] = []
 
 const projectile_scene = preload("res://torch/projectiles/projectile.tscn")
+var KNOCKBACK_FORCE: float = 10.0
+var KNOCKBACK_FRICTION: float = 5.0
+var HIT_STOP_DURATION: float = 0.1
 
 func _ready() -> void:
 	fuel_bar.value = max_fuel

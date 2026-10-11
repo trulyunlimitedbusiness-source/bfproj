@@ -29,9 +29,6 @@ var path_update_interval: float = 0.2
 var actual_speed: float = 90.0
 
 # 💥 COMBAT FEEL SETTINGS (KNOCKBACK & HIT-STOP)
-const KNOCKBACK_FORCE: float = 10.0
-const KNOCKBACK_FRICTION: float = 5.0
-const HIT_STOP_DURATION: float = 0.1
 var knockback_velocity: Vector2 = Vector2.ZERO
 var is_frozen: bool = false
 var pre_squish_scale: Vector2 = Vector2.ONE
@@ -43,6 +40,7 @@ var flash_timer: float = 0.0
 const FLASH_DURATION: float = 0.08
 
 func _ready() -> void:
+	globals.enemy = self
 	if ehb:
 		ehb.max_value = health
 		ehb.value = health
@@ -130,7 +128,7 @@ func _physics_process(delta: float) -> void:
 		state.attack:
 			if body_sprite and body_sprite.animation != "attack":
 				body_sprite.play("attack")
-			knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, KNOCKBACK_FRICTION * actual_speed * 10.0 * delta)
+			knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, globals.torch.KNOCKBACK_FRICTION * actual_speed * 10.0 * delta)
 			velocity = knockback_velocity
 			move_and_slide()
 			
@@ -146,7 +144,7 @@ func _on_nav_agent_velocity_computed(safe_velocity: Vector2) -> void:
 
 func _apply_movement(target_velocity: Vector2, delta: float) -> void:
 	var chase_velocity = velocity.lerp(target_velocity, delta * 10.0)
-	knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, KNOCKBACK_FRICTION * actual_speed * delta)
+	knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, globals.torch.KNOCKBACK_FRICTION * actual_speed * delta)
 	velocity = chase_velocity + knockback_velocity
 	move_and_slide()
 
@@ -195,12 +193,12 @@ func take_damage(amount: float, bullet_direction: Vector2 = Vector2.ZERO) -> voi
 		trigger_hit_stop()
 		
 	if bullet_direction != Vector2.ZERO:
-		knockback_velocity = bullet_direction * KNOCKBACK_FORCE
+		knockback_velocity = bullet_direction * globals.torch.KNOCKBACK_FORCE
 	else:
 		var live_player = globals.player
 		if is_instance_valid(live_player):
 			var push_direction = live_player.global_position.direction_to(global_position).normalized()
-			knockback_velocity = push_direction * KNOCKBACK_FORCE
+			knockback_velocity = push_direction * globals.torch.KNOCKBACK_FORCE
 			
 	if camera and camera.has_method("add_shake"):
 		camera.add_shake(2.5)
@@ -234,7 +232,7 @@ func take_damage(amount: float, bullet_direction: Vector2 = Vector2.ZERO) -> voi
 
 func trigger_hit_stop() -> void:
 	is_frozen = true
-	await get_tree().create_timer(HIT_STOP_DURATION).timeout
+	await get_tree().create_timer(globals.torch.HIT_STOP_DURATION).timeout
 	is_frozen = false
 
 func trigger_clean_death() -> void:

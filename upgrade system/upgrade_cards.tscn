@@ -14,6 +14,12 @@
 [ext_resource type="Texture2D" uid="uid://bbbh2sbbxch6l" path="res://upgrade system/sprites/icons/slide.png" id="12_4sxa2"]
 [ext_resource type="Texture2D" uid="uid://dytwq3rc50mt0" path="res://upgrade system/sprites/icons/attack size.png" id="13_jt0nx"]
 [ext_resource type="Texture2D" uid="uid://vh1ac85pow7t" path="res://upgrade system/sprites/icons/deckspeed.png" id="14_m8ybe"]
+[ext_resource type="Texture2D" uid="uid://ds4okwnk8hqdq" path="res://upgrade system/sprites/icons/stab.png" id="15_4ynw5"]
+[ext_resource type="Texture2D" uid="uid://cfuwd3kwx04ch" path="res://upgrade system/sprites/icons/spin.png" id="16_yeq2f"]
+[ext_resource type="Texture2D" uid="uid://dvpgc20wvja7r" path="res://upgrade system/sprites/icons/hollowpoint.png" id="17_vqq7x"]
+[ext_resource type="Texture2D" uid="uid://clgysgecp41w" path="res://upgrade system/sprites/icons/enemyknockback.png" id="18_edhxa"]
+[ext_resource type="Texture2D" uid="uid://cmxa8p0hprdv1" path="res://upgrade system/sprites/icons/curve.png" id="19_0l2pv"]
+[ext_resource type="Texture2D" uid="uid://cldetyjwd2wua" path="res://upgrade system/sprites/icons/Everythingallthetime.png" id="20_yeq2f"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g8dt1"]
 animations = [{
@@ -56,6 +62,24 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("14_m8ybe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_edhxa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_vqq7x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_0l2pv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_4ynw5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_yeq2f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_yeq2f")
 }],
 "loop": true,
 "name": &"default",

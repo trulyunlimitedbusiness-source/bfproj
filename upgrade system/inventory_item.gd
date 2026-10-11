@@ -11,3 +11,4 @@ class_name InvItem
 # =========================================================================
 @export var attack_method_name: String = ""
 @export_multiline var description: String = "" # Adds a multi-line text box in the Inspector
+@export var is_passive: bool = false

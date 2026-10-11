@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="InvItem" format=3 uid="uid://cfnxbqtp12hkw"]
+
+[ext_resource type="Script" uid="uid://c3l6sti2a6aat" path="res://upgrade system/inventory_item.gd" id="1_0eaft"]
+[ext_resource type="Texture2D" uid="uid://cldetyjwd2wua" path="res://upgrade system/sprites/icons/Everythingallthetime.png" id="2_p5y3b"]
+
+[resource]
+script = ExtResource("1_0eaft")
+name = "Everythingallthetime"
+texture = ExtResource("2_p5y3b")
+card_sprite_frame = 18
+description = "Everything all of the time:
+
+Every modifier is 
+upgraded by 50%"
+is_passive = true
+metadata/_custom_type_script = "uid://c3l6sti2a6aat"

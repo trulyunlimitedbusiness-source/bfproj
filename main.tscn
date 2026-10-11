@@ -148,3 +148,11 @@ frame = 1
 [node name="UpgradeCards8" parent="." unique_id=1910780220 instance=ExtResource("10_4c57u")]
 position = Vector2(-395, -15)
 frame = 10
+
+[node name="UpgradeCards9" parent="." unique_id=293845062 instance=ExtResource("10_4c57u")]
+position = Vector2(-387, 166)
+frame = 13
+
+[node name="UpgradeCards10" parent="." unique_id=2131340121 instance=ExtResource("10_4c57u")]
+position = Vector2(-444, 167)
+frame = 18

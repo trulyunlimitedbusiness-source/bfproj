@@ -5,15 +5,20 @@ extends CanvasLayer
 # 🛰️ TRACKER DIRECTORIES
 @onready var left_melee_grid: Control = $invctrl/GridContainer
 @onready var storage_grid: Control = $invctrl/StorageGrid
+@onready var passive_grid: Control = $invctrl/passivegrid
+@onready var passive_storage: Control = $invctrl/passivestorage
 @onready var left_hand_hud: VBoxContainer = get_node_or_null("../uiLayer/GameplayDeckHUD/LeftHandHUD")
 @onready var right_hand_hud: VBoxContainer = get_node_or_null("../uiLayer/GameplayDeckHUD/RightHandHUD")
 @onready var card_click_sound: AudioStreamPlayer = $click
 const MOD_TEX = preload("res://upgrade system/sprites/descbox.png")
 const ATK_TEX = preload("res://upgrade system/sprites/descbox2.png")
+const PAS_TEX = preload("res://upgrade system/sprites/passivedesc.png")
 const MOD_FONT_COLOR = Color("f5bfbc")
 const MOD_OUTLINE_COLOR = Color("240202")
 const ATK_FONT_COLOR = Color("420909")
 const ATK_OUTLINE_COLOR = Color("ffcaca")
+const PAS_FONT_COLOR = Color(0.196, 0.259, 0.09, 1.0)
+const PAS_OUTLINE_COLOR = Color(0.889, 0.986, 0.744, 1.0)
 var button_1_tween: Tween = null
 var button_2_tween: Tween = null
 @onready var red_left: NinePatchRect = $invctrl/Control/NinePatchRect
@@ -81,8 +86,23 @@ var right_size_multiplier_primed: bool = false
 @export var EMPTY_SLOT_SKIPPING_DELAY: float = 0.005 
 @onready var description_popup: NinePatchRect = $DescriptionPopup
 @onready var description_label: Label = $DescriptionPopup/DescriptionLabel
-
+var active_flight_targets: Dictionary = {}
+var upgrade_mult = 1.5
 func _ready() -> void:
+	_register_slots()
+	
+	if inv != null and inv.items.size() != 160:
+		inv.items.resize(160)
+
+	# 🚀 FORCE PAGE 1 CONTAINERS ACTIVE IMMEDIATELY ON STARTUP
+	_set_inventory_containers_active(true)
+
+	if is_instance_valid(red_left): red_left.visible = true
+	if is_instance_valid(green_right): green_right.visible = false
+
+	print("Inventory UI Ready. Page 1 forced active on startup.")
+	update_slots()
+	_set_inventory_containers_active(true)
 	$invctrl/Control/TextureButton2.visible = false
 	if is_instance_valid(description_popup):
 		description_popup.visible = false
@@ -93,32 +113,36 @@ func _ready() -> void:
 	# Register this node instance with your global singleton bridge
 	globals.inventory = self
 	
-	# Gather the visual panel child nodes from your grid containers
+	# Gather the visual panel child nodes from your grid containers safely
 	var melee_children = left_melee_grid.get_children() if is_instance_valid(left_melee_grid) else []
 	var storage_children = storage_grid.get_children() if is_instance_valid(storage_grid) else []
 	
 	slots.clear()
-	slots.append_array(melee_children)     # Slots 0 to 71 (Active Left/Right Hands)
-	slots.append_array(storage_children) # Slots 72+ (Your Bottom Deck Storage Rows)
 	
-	print("🛠️ INVENTORY UI: Visual layout mapped with: ", slots.size(), " total panel slots.")
-	
-	# =========================================================================
-	# 🎒 THE STRUCTURAL DATA ADDRESS SHIELD
-	# 💡 FIXED: If your saved inventory.tres file size is too small, your right hand
-	# lanes (slots 36-71) will return null entries and do absolutely nothing!
-	# This loop forcefully resizes your data array to perfectly match your slot count.
-	# =========================================================================
+	# Add melee slots first (Slots 0 to 71)
+	for slot in melee_children:
+		if is_instance_valid(slot):
+			slots.append(slot)
+			
+	# Add storage slots sequentially until the strict 160 total limit is met
+	for slot in storage_children:
+		if is_instance_valid(slot) and slots.size() < 160:
+			slots.append(slot)
+			
+	# Hide any extra visual slots in the scene that exceed the 160 inventory limit
+	for i in range(160, storage_children.size()):
+		if is_instance_valid(storage_children[i]):
+			storage_children[i].visible = false
+
+	print("🛠️ INVENTORY UI: Validated and locked slots to: ", slots.size())
+
+	# Ensure inventory resource matches exactly 160 data addresses
 	if is_instance_valid(inv):
-		if inv.items.size() < slots.size():
-			inv.items.resize(slots.size())
-			print("📦 DATABASE FIXED: Resized inv.items array up to ", slots.size(), " addresses.")
-			
-		# Cleanse loop: Ensure it boots clean and fresh for your session
-		for i in range(inv.items.size()):
-			inv.items[i] = null
-			
-	# Map index identities cleanly onto every panel cell
+		if inv.items.size() != 160:
+			inv.items.resize(160)
+			print("📦 DATABASE FIXED: Resized inv.items array up to 160 addresses.")
+
+	# Map clean, sequential index identities (0 to 159) onto every active panel cell
 	for i in range(slots.size()):
 		var slot_node = slots[i]
 		if is_instance_valid(slot_node):
@@ -128,7 +152,22 @@ func _ready() -> void:
 	_initialize_floating_preview_layer()
 	update_slots()
 	close()
+func _register_slots() -> void:
+	slots.clear()
+	
+	# Gather Red page slots
+	var melee_children = left_melee_grid.get_children() if is_instance_valid(left_melee_grid) else []
+	for slot in melee_children:
+		if is_instance_valid(slot) and slots.size() < 160:
+			slots.append(slot)
+			
+	# Gather Green page / storage slots up to 160 total
+	var storage_children = storage_grid.get_children() if is_instance_valid(storage_grid) else []
+	for slot in storage_children:
+		if is_instance_valid(slot) and slots.size() < 160:
+			slots.append(slot)
 
+	print("🛠️ INVENTORY UI: Final locked slots count = ", slots.size())
 func _initialize_floating_preview_layer() -> void:
 	floating_preview_card = TextureRect.new()
 	floating_preview_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -141,11 +180,13 @@ func _initialize_floating_preview_layer() -> void:
 	floating_preview_card.pivot_offset = mouse_top_center_offset
 	add_child(floating_preview_card)
 func _process(delta: float) -> void:
+	# 🎴 HOVER DESCRIPTION TICK
 	if is_open:
 		var hovered_idx = get_slot_index_under_mouse()
 		_update_hover_description(hovered_idx)
 	else:
 		hide_description()
+
 	# 🎒 INVENTORY WINDOW TOGGLE KEYS
 	if Input.is_action_just_pressed("inv_open"):
 		if is_open: close()
@@ -156,7 +197,7 @@ func _process(delta: float) -> void:
 		visible = false
 		return
 
-	# Unconditional deck play cooldown clocks tracking countdown
+	# Hand cooldown clocks
 	left_hand_cooldown -= delta
 	right_hand_cooldown -= delta
 	
@@ -164,23 +205,19 @@ func _process(delta: float) -> void:
 	# ⌨️ EXCLUSIVE DECK INPUT LISTENERS (GAMEPLAY ONLY)
 	# =========================================================================
 	if not is_open:
-		# 🫱 LEFT HAND TRIGGERS: Capture Left Mouse Button Clicks or Named Actions
 		var left_clicked: bool = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
 		if left_clicked:
 			if not is_left_hand_streaming and not is_right_hand_streaming and left_hand_cooldown <= 0.0:
 				is_left_hand_streaming = true
-				left_hand_index_head = 0 # Force needle to start exactly at slot 0!
+				left_hand_index_head = 0
 				left_hand_cooldown = 0.0
-				print("🚀 DECK INITIALIZED: Left hand stream active. Tracking 36 steps uniformly.")
 				
-		# 🫲 RIGHT HAND TRIGGERS: Capture Right Mouse Button Clicks or Named Actions
 		var right_clicked: bool = Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
 		if right_clicked:
 			if not is_left_hand_streaming and not is_right_hand_streaming and right_hand_cooldown <= 0.0:
 				is_right_hand_streaming = true
-				right_hand_index_head = 36 # Force needle to start exactly at slot 36!
+				right_hand_index_head = 36
 				right_hand_cooldown = 0.0
-				print("🚀 DECK INITIALIZED: Right hand stream active. Tracking 36 steps uniformly.")
 
 	# =========================================================================
 	# 🚀 DECK STREAM ENGINE CORE AUTOMATION
@@ -188,8 +225,6 @@ func _process(delta: float) -> void:
 	var can_weapon_execute: bool = true
 	if is_instance_valid(globals.torch) and "can_shoot" in globals.torch:
 		can_weapon_execute = globals.torch.can_shoot
-	else:
-		can_weapon_execute = true # Fallback safety line
 
 	if can_weapon_execute:
 		if is_left_hand_streaming and left_hand_cooldown <= 0.0:
@@ -201,7 +236,9 @@ func _process(delta: float) -> void:
 		hide_description()
 		return
 	
-	# Dynamic Palette swinging physics loop running through un-parented overlay space
+	# =========================================================================
+	# 🎴 DYNAMIC PALETTE SWINGING & DUAL-PAGE HOVER SHIFTER
+	# =========================================================================
 	if floating_preview_card and floating_preview_card.visible:
 		var current_mouse_pos = get_viewport().get_mouse_position()
 		floating_preview_card.global_position = current_mouse_pos - mouse_top_center_offset
@@ -215,40 +252,57 @@ func _process(delta: float) -> void:
 		var hovered_idx = get_slot_index_under_mouse()
 		_update_hover_description(hovered_idx)
 		
-		# 🎴 DYNAMIC VISUAL CARDS MATRIX SHIFTER:
-		for i in range(72, slots.size()):
-			var slot_node = slots[i]
-			if is_instance_valid(slot_node) and slot_node.visible:
-				var card_visual_child = slot_node.get_node_or_null("CenterContainer")
-				if is_instance_valid(card_visual_child):
-					var target_x = 0.0
-					if active_drag_source_index >= 72 and i > active_drag_source_index:
-						target_x -= storage_remove_shift_amount
-					if hovered_idx >= 72 and i >= hovered_idx:
-						target_x += storage_shift_amount
-					card_visual_child.position.x = lerp(card_visual_child.position.x, target_x, 16.0 * delta)
+		var slot_width: float = 100.0
+		
+		var start_s_idx = -1
+		var end_s_idx = -1
+		
+		if hovered_idx >= 72 and hovered_idx < 92:
+			start_s_idx = 72
+			end_s_idx = 92 # Page 1 Active Storage Pool
+		elif hovered_idx >= 140 and hovered_idx < 160:
+			start_s_idx = 140
+			end_s_idx = 160 # Page 2 Passive Storage Pool
+			
+		if start_s_idx != -1:
+			for i in range(start_s_idx, end_s_idx):
+				var slot_node = slots[i]
+				if is_instance_valid(slot_node) and slot_node.visible:
+					var card_visual_child = slot_node.get_node_or_null("CenterContainer")
+					if is_instance_valid(card_visual_child):
+						var target_x = 0.0
+						
+						if active_drag_source_index != -1:
+							if active_drag_source_index < start_s_idx or active_drag_source_index >= end_s_idx:
+								if i >= hovered_idx:
+									target_x = slot_width
+							else:
+								if active_drag_source_index < hovered_idx:
+									if i > active_drag_source_index and i <= hovered_idx:
+										target_x = -slot_width
+								elif active_drag_source_index > hovered_idx:
+									if i >= hovered_idx and i < active_drag_source_index:
+										target_x = slot_width
+										
+						card_visual_child.position.x = lerp(card_visual_child.position.x, target_x, 20.0 * delta)
 	else:
-		for i in range(72, slots.size()):
-			var slot_node = slots[i]
-			if is_instance_valid(slot_node):
-				var card_visual_child = slot_node.get_node_or_null("CenterContainer")
-				if is_instance_valid(card_visual_child):
-					card_visual_child.position.x = lerp(card_visual_child.position.x, 0.0, 16.0 * delta)
-
+		for i in range(slots.size()):
+			if (i >= 72 and i < 92) or (i >= 140 and i < 160):
+				var slot_node = slots[i]
+				if is_instance_valid(slot_node):
+					var card_visual_child = slot_node.get_node_or_null("CenterContainer")
+					if is_instance_valid(card_visual_child):
+						card_visual_child.position.x = lerp(card_visual_child.position.x, 0.0, 16.0 * delta)
 func get_slot_index_under_mouse() -> int:
-	var global_mouse_pos = get_viewport().get_mouse_position()
+	var mouse_pos = get_viewport().get_mouse_position()
+	
 	for i in range(slots.size()):
-		var slot = slots[i]
-		if is_instance_valid(slot) and slot.is_visible_in_tree():
-			# 🛑 GATE: Ignore slots set to MOUSE_FILTER_IGNORE (Page 2)
-			if slot.mouse_filter == Control.MOUSE_FILTER_IGNORE:
-				continue
+		var slot_node = slots[i]
+		# Only check slots that are currently visible and part of the active page view
+		if is_instance_valid(slot_node) and slot_node.is_visible_in_tree():
+			if slot_node.get_global_rect().has_point(mouse_pos):
+				return i
 				
-			var slot_rect = Rect2(slot.global_position, slot.size)
-			if slot_rect.has_point(global_mouse_pos):
-				# Return index only if there is a valid item here
-				if i < inv.items.size() and inv.items[i] != null:
-					return i
 	return -1
 func _get_card_info_for_frame(f_id: int) -> Dictionary:
 	match f_id:
@@ -355,6 +409,22 @@ func _get_card_info_for_frame(f_id: int) -> Dictionary:
 				"bg_texture": MOD_TEX,
 				"font_color": MOD_FONT_COLOR,
 				"outline_color": MOD_OUTLINE_COLOR
+			}
+		13:
+			return {
+				"title": "Enemy Knockback:",
+				"body": "Enemy knockback is\nincreased by 1.5x",
+				"bg_texture": MOD_TEX,
+				"font_color": MOD_FONT_COLOR,
+				"outline_color": MOD_OUTLINE_COLOR
+			}
+		18:
+			return {
+				"title": "Everything All Of The Time:",
+				"body": "Every modifier\nupgraded by 50%",
+				"bg_texture": PAS_TEX,
+				"font_color": PAS_FONT_COLOR,
+				"outline_color": PAS_OUTLINE_COLOR
 			}
 		_:
 			print("WARNING: Unknown card_sprite_frame ID: ", f_id)
@@ -603,6 +673,18 @@ func _terminate_active_hand_stream(is_left_hand: bool, fallback_start_slot: int)
 		right_hand_index_head = fallback_start_slot
 		right_hand_cooldown = 0.0
 	update_slots()
+func apply_passive_card_impact() -> void:
+	# Iterate exclusively across Page 2's Passive Grid slots (92 to 139)
+	for i in range(92, 140):
+		var passive_item: InvItem = inv.items[i] if i < inv.items.size() else null
+		if passive_item == null:
+			continue
+			
+		var f_id: int = passive_item.card_sprite_frame
+		
+		# 🎴 PASSIVE CARD IMPACT MAPPING BY ANIMATED SPRITE FRAME
+		if f_id == 18: # Everythingallthetime
+			upgrade_mult *= 1.5
 func _apply_single_card_impact(equipped_card: InvItem) -> void:
 	if not is_instance_valid(equipped_card): return
 	
@@ -610,30 +692,30 @@ func _apply_single_card_impact(equipped_card: InvItem) -> void:
 	
 	if f_id == 0:
 		if is_instance_valid(globals.player):
-			globals.player.SPEED *= 1.5
-			globals.player.STEP_DELAY /= 1.5
+			globals.player.SPEED *= upgrade_mult
+			globals.player.STEP_DELAY /= upgrade_mult
 			
 	elif f_id == 1:
 		if is_instance_valid(globals.torch):
-			globals.torch.SWIPE_DAMAGE *= 1.5
-			globals.torch.damage *= 1.7
+			globals.torch.SWIPE_DAMAGE *= upgrade_mult
+			globals.torch.damage *= upgrade_mult*1.2
 			
 	elif f_id == 4:
 		if is_instance_valid(globals.torch):
-			globals.torch.speed *= 1.3
-			globals.torch.max_range *= 1.5
+			globals.torch.speed *= upgrade_mult/1.1
+			globals.torch.max_range *= upgrade_mult
 			
 	elif f_id == 5:
 		if is_instance_valid(globals.torch):
-			globals.torch.accuracy_spread_degrees /= 1.5
+			globals.torch.accuracy_spread_degrees /= upgrade_mult
 			
 	elif f_id == 6:
 		if is_instance_valid(globals.torch):
-			globals.torch.overheat_cost /= 1.5
+			globals.torch.overheat_cost /= upgrade_mult
 			
 	elif f_id == 7:
 		if is_instance_valid(globals.torch):
-			globals.torch.fuel_cost /= 1.6
+			globals.torch.fuel_cost /= upgrade_mult*1.1
 			
 	elif f_id == 8:
 		if is_instance_valid(globals.torch):
@@ -641,23 +723,23 @@ func _apply_single_card_impact(equipped_card: InvItem) -> void:
 			
 	elif f_id == 9:
 		if is_instance_valid(globals.player):
-			globals.player.RECOIL_FORCE *= 1.8
+			globals.player.RECOIL_FORCE *= upgrade_mult*1.2
 			
 	elif f_id == 10:
 		if is_instance_valid(globals.player):
 			globals.player.slipperiness += 0.50
-			globals.player.slipperiness *= 1.8
-			globals.player.slide_speed *= 1.5
-			globals.player.FRICTION /= 1.5
+			globals.player.slipperiness *= upgrade_mult*1.2
+			globals.player.slide_speed *= upgrade_mult
+			globals.player.FRICTION /= upgrade_mult
 			
 	elif f_id == 11:
 		if is_instance_valid(globals.torch):
 			# Set up our absolute resting ceiling cap and our dramatic overshoot peak
-			var resting_modifier_scale = Vector2(1.3, 1.3)
-			var explosive_overshoot_peak = Vector2(1.5, 1.5)
+			var resting_modifier_scale = Vector2(upgrade_mult/1.1, upgrade_mult/1.1)
+			var explosive_overshoot_peak = Vector2(upgrade_mult, upgrade_mult)
 			
 			# Keep your backend projectile mathematical values locked to their ceiling caps
-			globals.torch.projectile_size = Vector2(1.3, 1.3)
+			globals.torch.projectile_size = Vector2(upgrade_mult/1.1, upgrade_mult/1.1)
 			
 			# =========================================================================
 			# 🪀 MULTI-STAGE SHOCKWAVE TWEEN CHAIN
@@ -673,43 +755,139 @@ func _apply_single_card_impact(equipped_card: InvItem) -> void:
 			# STAGE 2: The Snap-Back Wobble (Chained automatically to ripple back home)
 			wobble_tween.chain().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 			wobble_tween.tween_property(globals.torch, "scale", resting_modifier_scale, 0.55)
-			globals.torch.damage *= 1.15
-			globals.torch.SWIPE_DAMAGE *= 1.15
+			globals.torch.damage *= upgrade_mult/1.3
+			globals.torch.SWIPE_DAMAGE *= upgrade_mult/1.3
 	elif f_id == 12:
 		if is_instance_valid(globals.torch):
-			globals.torch.fire_rate /= 1.3
-			BASE_DECK_SPEED_DELAY /= 1.3
-			globals.torch.fuel_cost /= 1.3
-			globals.torch.overheat_cost /= 1.3
-			PADDING_SKIPPING_DELAY /= 1.3 
-			EMPTY_SLOT_SKIPPING_DELAY /= 1.3 
-			globals.torch.active_melee_attack_duration /= 1.3
-			globals.torch.swing_speed_ratio /= 1.3
-func update_slots() -> void:
-	active_drag_source_index = -1
-	current_dragged_item_resource = null
-	if floating_preview_card: 
-		floating_preview_card.visible = false
-		
-	if is_instance_valid(storage_grid):
-		storage_grid.add_theme_constant_override("h_separation", storage_overlap_gap)
-		
-	# =========================================================================
-	# 💡 FIXED: ARRAY COMPRESSION REMOVED
-	# Items will now maintain their EXACT slot positions (including gaps)
-	# without shifting left or overlapping in the UI!
-	# =========================================================================
+			globals.torch.fire_rate /= upgrade_mult/1.1
+			BASE_DECK_SPEED_DELAY /= upgrade_mult/1.1
+			globals.torch.fuel_cost /= upgrade_mult/1.1
+			globals.torch.overheat_cost /= upgrade_mult/1.1
+			PADDING_SKIPPING_DELAY /= upgrade_mult/1.1
+			EMPTY_SLOT_SKIPPING_DELAY /= upgrade_mult/1.1
+			globals.torch.active_melee_attack_duration /= upgrade_mult/1.1
+			globals.torch.swing_speed_ratio /= upgrade_mult/1.1
+	elif f_id == 13:
+		if is_instance_valid(globals.torch):
+			globals.torch.KNOCKBACK_FORCE *= upgrade_mult
+			globals.torch.KNOCKBACK_FRICTION /= upgrade_mult
+			globals.torch.HIT_STOP_DURATION *= upgrade_mult
+func drop_card_into_slot(from_idx: int, to_idx: int) -> void:
+	print("🎯 DROP CALLED: from_idx=", from_idx, " to_idx=", to_idx, " | slots.size()=", slots.size())
+	
+	var max_limit = min(slots.size(), inv.items.size())
+	if from_idx < 0 or to_idx < 0 or from_idx >= max_limit or to_idx >= max_limit:
+		print("❌ REJECTED: Out of bounds! max_limit=", max_limit)
+		active_drag_source_index = -1
+		current_dragged_item_resource = null
+		if floating_preview_card:
+			floating_preview_card.visible = false
+		update_slots()
+		return
 
-	# B. Redraw cell graphics over your manual editor slot panels directly from inv.items
-	for i in range(min(inv.items.size(), slots.size())):
-		if is_instance_valid(slots[i]):
-			slots[i].visible = true
-			slots[i].update(inv.items[i])
-			if i >= 72:
-				var card_visual_child = slots[i].get_node_or_null("CenterContainer")
-				if is_instance_valid(card_visual_child):
-					card_visual_child.position.x = 0.0
-					
+	var source_item = current_dragged_item_resource if "current_dragged_item_resource" in self else null
+	if source_item == null:
+		source_item = inv.items[from_idx] 
+
+	if source_item != null:
+		var target_is_passive = (to_idx >= 92 and to_idx < max_limit)
+		print("🔍 Zone check: item is_passive=", source_item.is_passive, " | target_is_passive=", target_is_passive)
+		if source_item.is_passive != target_is_passive:
+			print("❌ REJECTED: Zone mismatch (Active vs Passive zone violation)")
+			active_flight_targets.erase(from_idx)
+			active_drag_source_index = -1
+			current_dragged_item_resource = null
+			if floating_preview_card:
+				floating_preview_card.visible = false
+			update_slots()
+			return
+
+	print("✅ DROP SUCCESSFUL: Proceeding with swap animation/data commit.")
+	# (Rest of your existing function code below...)
+
+	var actual_to_idx = to_idx
+
+	var target_slot_node = slots[actual_to_idx] if actual_to_idx < slots.size() else null
+	var origin_slot_node = slots[from_idx] if from_idx < slots.size() else null
+	
+	if not is_instance_valid(origin_slot_node) or not is_instance_valid(target_slot_node):
+		_commit_slot_data_swap(from_idx, actual_to_idx, source_item)
+		active_flight_targets.erase(from_idx)
+		active_flight_targets.erase(actual_to_idx)
+		active_drag_source_index = -1
+		current_dragged_item_resource = null
+		update_slots()
+		return
+
+	active_flight_targets[from_idx] = true
+	active_flight_targets[actual_to_idx] = true
+
+	if origin_slot_node.has_node("CenterContainer"):
+		origin_slot_node.get_node("CenterContainer").visible = false
+
+	var target_pos = target_slot_node.global_position
+	if floating_preview_card:
+		floating_preview_card.pivot_offset = Vector2.ZERO
+
+	# =========================================================================
+	# ✈️ TWEEN SWAP ANIMATION
+	# =========================================================================
+	master_swap_tween = create_tween()
+	master_swap_tween.set_parallel(true)
+	master_swap_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	
+	if floating_preview_card:
+		master_swap_tween.tween_property(floating_preview_card, "global_position", target_pos, 0.15)
+		master_swap_tween.tween_property(floating_preview_card, "scale", Vector2.ONE, 0.15)
+		master_swap_tween.tween_property(floating_preview_card, "rotation", 0.0, 0.10)
+
+	master_swap_tween.chain().tween_callback(func():
+		_commit_slot_data_swap(from_idx, actual_to_idx, source_item)
+		
+		if floating_preview_card:
+			floating_preview_card.visible = false
+
+		active_flight_targets.erase(from_idx)
+		active_flight_targets.erase(actual_to_idx)
+		active_drag_source_index = -1
+		current_dragged_item_resource = null
+
+		# Reset visual horizontal hover shifts in storage slots
+		for i in range(slots.size()):
+			if (i >= 72 and i < 92) or (i >= 140 and i < 160):
+				var s_node = slots[i]
+				if is_instance_valid(s_node):
+					var child = s_node.get_node_or_null("CenterContainer")
+					if is_instance_valid(child):
+						child.position.x = 0.0
+
+		var dropped_item = inv.items[actual_to_idx]
+		_apply_single_card_impact(dropped_item)
+				
+		apply_passive_card_impact()
+		update_slots()
+	)
+func update_slots() -> void:
+	if inv == null or inv.items.is_empty():
+		return
+		
+	# Loop through slots and update their data safely without recursion triggers
+	for i in range(min(slots.size(), inv.items.size())):
+		var slot = slots[i]
+		if is_instance_valid(slot):
+			if slot.has_method("update"):
+				slot.update(inv.items[i])
+			else:
+				var item = inv.items[i]
+				var item_visuals = slot.get_node_or_null("CenterContainer/Panel/item_display")
+				if is_instance_valid(item_visuals):
+					if item != null and item.texture != null:
+						item_visuals.texture = item.texture
+						item_visuals.visible = true
+					else:
+						item_visuals.texture = null
+						item_visuals.visible = false
+
 	# =========================================================================
 	# 📊 GLOBAL STAT DEFAULT ROOTS RESTORATION
 	# =========================================================================
@@ -734,32 +912,22 @@ func update_slots() -> void:
 		EMPTY_SLOT_SKIPPING_DELAY = 0.005
 		globals.torch.swing_speed_ratio = 0.45
 		globals.torch.active_melee_attack_duration = 0.45
-		
-		# Keep your backend projectile mathematical values locked to baseline caps instantly
 		globals.torch.projectile_size = Vector2(1.0, 1.0)
+		globals.torch.KNOCKBACK_FORCE = 10.0
+		globals.torch.KNOCKBACK_FRICTION = 5.0
+		globals.torch.HIT_STOP_DURATION = 0.1
+		upgrade_mult = 1.5
 		
-		# Set up our absolute resting baseline size and our dramatic undershoot snap peak
 		var resting_baseline_scale = Vector2(1.0, 1.0)
 		var elastic_undershoot_peak = Vector2(0.7, 0.7)
 		
-		# =========================================================================
-		# 🪀 THE SCALE VALIDATION FIREWALL GATE
-		# 💡 FIXED: Only triggers the springy collapse animation if the torch was 
-		# actually modified and scaled up past its baseline 1.0 limit!
-		# If it's already at normal scale, it skips the wobble to prevent ghost snaps.
-		# =========================================================================
 		if globals.torch.scale.x > 1.01 or globals.torch.scale.y > 1.01:
 			var reset_tween = globals.torch.create_tween()
-			
-			# STAGE 1: Rapid structural contraction snap (Crisp and swift)
 			reset_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 			reset_tween.tween_property(globals.torch, "scale", elastic_undershoot_peak, 0.10)
-			
-			# STAGE 2: The Snap-Up Wobble (Chained automatically to ripple back to normal)
 			reset_tween.chain().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 			reset_tween.tween_property(globals.torch, "scale", resting_baseline_scale, 0.50)
 			
-			# If you have an inner sprite node child, mirror the exact same elastic bounce over it
 			var torch_sprite = globals.torch.get_node_or_null("AnimatedSprite2D")
 			if is_instance_valid(torch_sprite):
 				var sprite_tween = torch_sprite.create_tween()
@@ -768,8 +936,6 @@ func update_slots() -> void:
 				sprite_tween.chain().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 				sprite_tween.tween_property(torch_sprite, "scale", Vector2.ONE, 0.50)
 		else:
-			# 🔒 SOLID QUIET SNAP FALLBACK: If the size modifier wasn't active, 
-			# quietly lock the values back to normal with zero visual disruptions!
 			globals.torch.scale = resting_baseline_scale
 			var torch_sprite = globals.torch.get_node_or_null("AnimatedSprite2D")
 			if is_instance_valid(torch_sprite):
@@ -797,7 +963,6 @@ func update_slots() -> void:
 				var backend_item = inv.items[i]
 				
 				if is_instance_valid(hud_slot_cell):
-					# 🛡️ Fallback Gate: Use the custom method if it exists, otherwise assign the asset directly
 					if hud_slot_cell.has_method("update"):
 						hud_slot_cell.update(backend_item)
 					elif "texture" in hud_slot_cell:
@@ -816,7 +981,6 @@ func update_slots() -> void:
 				var backend_item = inv.items[36 + i]
 				
 				if is_instance_valid(hud_slot_cell):
-					# 🛡️ Fallback Gate: Use the custom method if it exists, otherwise assign the asset directly
 					if hud_slot_cell.has_method("update"):
 						hud_slot_cell.update(backend_item)
 					elif "texture" in hud_slot_cell:
@@ -898,120 +1062,12 @@ func close() -> void:
 			if is_instance_valid(globals.torch):
 				globals.torch.can_shoot = true
 		)
-func drop_card_into_slot(from_idx: int, to_idx: int) -> void:
-	if master_swap_tween and master_swap_tween.is_valid(): 
-		return
-		
-	if is_instance_valid(card_click_sound):
-		card_click_sound.pitch_scale = randf_range(0.8, 1.2)
-		card_click_sound.volume_db = -8.0
-		card_click_sound.play()
-		
-	if from_idx == to_idx: 
-		update_slots() 
-		return
-		
-	if from_idx < inv.items.size() and to_idx < inv.items.size():
-		var source_item = inv.items[from_idx]
-		
-		# =========================================================================
-		# 🎴 STORAGE PACKING CALCULATION (Slots 72+)
-		# Automatically redirects placement to the nearest valid adjacent slot
-		# =========================================================================
-		var actual_to_idx = to_idx
-		if to_idx >= 72:
-			var storage_count = 0
-			for i in range(72, inv.items.size()):
-				if i != from_idx and inv.items[i] != null:
-					storage_count += 1
-			
-			# Clamp target position so cards pack tightly starting at slot 72
-			var target_rel_pos = clamp(to_idx - 72, 0, storage_count)
-			actual_to_idx = 72 + target_rel_pos
 
-		var target_item = inv.items[actual_to_idx]
-		var target_scale_fraction = DROPPED_SIZE / SELECTED_SIZE
-		var target_scale_vector = Vector2(target_scale_fraction, target_scale_fraction)
-		
-		var origin_slot_node = slots[from_idx]
-		var target_slot_node = slots[actual_to_idx]
-		
-		if not is_instance_valid(origin_slot_node) or not is_instance_valid(target_slot_node):
-			_commit_slot_data_swap(from_idx, actual_to_idx, source_item)
-			update_slots()
-			return
-			
-		# Handle visual swap animation if target slot already contains an item
-		if target_item != null:
-			if "item_visuals" in origin_slot_node and is_instance_valid(origin_slot_node.item_visuals):
-				origin_slot_node.item_visuals.visible = false
-			if "item_visuals" in target_slot_node and is_instance_valid(target_slot_node.item_visuals):
-				target_slot_node.item_visuals.visible = false
-				
-			var secondary_swap_card = TextureRect.new()
-			secondary_swap_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			secondary_swap_card.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-			secondary_swap_card.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			secondary_swap_card.stretch_mode = TextureRect.STRETCH_SCALE
-			secondary_swap_card.texture = target_item.texture
-			secondary_swap_card.custom_minimum_size = Vector2(SELECTED_SIZE, SELECTED_SIZE)
-			secondary_swap_card.size = Vector2(SELECTED_SIZE, SELECTED_SIZE)
-			secondary_swap_card.pivot_offset = mouse_top_center_offset
-			
-			var landing_offset = Vector2((SELECTED_SIZE - DROPPED_SIZE) / 2.0, 0.0)
-			var adjusted_target_pos = target_slot_node.global_position - landing_offset
-			var adjusted_origin_pos = origin_slot_node.global_position - landing_offset
-			
-			secondary_swap_card.global_position = target_slot_node.global_position - landing_offset
-			secondary_swap_card.scale = target_scale_vector
-			add_child(secondary_swap_card)
-			
-			_commit_slot_data_swap(from_idx, actual_to_idx, source_item)
-			
-			master_swap_tween = create_tween()
-			master_swap_tween.set_parallel(true)
-			master_swap_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-			master_swap_tween.tween_property(floating_preview_card, "global_position", adjusted_target_pos, 0.18)
-			master_swap_tween.tween_property(floating_preview_card, "scale", target_scale_vector, 0.18)
-			master_swap_tween.tween_property(floating_preview_card, "rotation", 0.0, 0.14)
-			master_swap_tween.tween_property(secondary_swap_card, "global_position", adjusted_origin_pos, 0.18)
-			
-			master_swap_tween.chain().tween_callback(func(): 
-				if is_instance_valid(secondary_swap_card): 
-					secondary_swap_card.queue_free()
-				update_slots() 
-			)
-		else:
-			# Direct placement into an empty slot
-			_commit_slot_data_swap(from_idx, actual_to_idx, source_item)
-			
-			if floating_preview_card:
-				var landing_offset = Vector2((SELECTED_SIZE - DROPPED_SIZE) / 2.0, 0.0)
-				var adjusted_target_pos = target_slot_node.global_position - landing_offset
-				
-				master_swap_tween = create_tween()
-				master_swap_tween.set_parallel(true)
-				master_swap_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-				master_swap_tween.tween_property(floating_preview_card, "global_position", adjusted_target_pos, 0.18)
-				master_swap_tween.tween_property(floating_preview_card, "scale", target_scale_vector, 0.18)
-				master_swap_tween.tween_property(floating_preview_card, "rotation", 0.0, 0.14)
-				
-				master_swap_tween.chain().tween_callback(func(): 
-					update_slots() 
-				)
-			else:
-				update_slots()
 func _commit_slot_data_swap(from_idx: int, to_idx: int, source_item: Resource) -> void:
 	var target_item = inv.items[to_idx]
 
-	# Hand-to-Storage or Storage-to-Hand Swap
-	if (from_idx < 72 and to_idx >= 72) or (from_idx >= 72 and to_idx < 72):
-		inv.items[to_idx] = source_item
-		inv.items[from_idx] = target_item
-		_pack_storage_items()
-
-	# Storage-to-Storage Insertion
-	elif from_idx >= 72 and to_idx >= 72:
+	# Handle storage array re-indexing without triggering premature visual packs
+	if from_idx >= 72 and to_idx >= 72:
 		var storage_items: Array = []
 		for i in range(72, inv.items.size()):
 			if i != from_idx and inv.items[i] != null:
@@ -1026,26 +1082,26 @@ func _commit_slot_data_swap(from_idx: int, to_idx: int, source_item: Resource) -
 				inv.items[i] = storage_items[rel_i]
 			else:
 				inv.items[i] = null
-
-	# Hand-to-Hand Swap
 	else:
+		# Direct index swap for Hand <-> Storage or Hand <-> Hand
 		inv.items[to_idx] = source_item
 		inv.items[from_idx] = target_item
 func _pack_storage_items() -> void:
-	var storage_items: Array = []
-	
-	# Collect only valid active cards in storage
-	for i in range(72, inv.items.size()):
+	_pack_range(72, 92)   # Active Storage Pool (72-91)
+	_pack_range(140, 160) # Passive Storage Pool (140-159)
+
+func _pack_range(start_idx: int, end_idx: int) -> void:
+	if inv == null or inv.items.size() < end_idx:
+		return
+		
+	var non_empty: Array[InvItem] = []
+	for i in range(start_idx, end_idx):
 		if inv.items[i] != null:
-			storage_items.append(inv.items[i])
-			
-	# Overwrite storage slots 72+ sequentially, filling unused tail slots with null
-	for i in range(72, inv.items.size()):
-		var rel_i = i - 72
-		if rel_i < storage_items.size():
-			inv.items[i] = storage_items[rel_i]
-		else:
+			non_empty.append(inv.items[i])
 			inv.items[i] = null
+			
+	for i in range(non_empty.size()):
+		inv.items[start_idx + i] = non_empty[i]
 func _play_palette_card_proc(hud_slot_cell: Node) -> void:
 	if not is_instance_valid(hud_slot_cell):
 		return
@@ -1131,15 +1187,20 @@ func lift_card_from_slot(source_idx: int, item: Resource) -> void:
 	active_drag_source_index = source_idx
 	current_dragged_item_resource = item
 	
+	if source_idx >= 0 and source_idx < inv.items.size():
+		inv.items[source_idx] = null
+	
 	if is_instance_valid(card_click_sound):
 		card_click_sound.pitch_scale = randf_range(0.8, 1.2)
 		card_click_sound.volume_db = -8.0
 		card_click_sound.play()
 		
 	if floating_preview_card and item:
-		# 🎯 FORCE TOP RENDER ORDER
-		floating_preview_card.top_level = true # Ignores parent UI hierarchy ordering
-		floating_preview_card.z_index = 100    # Draws above red_right (z_index 1) and slots
+		floating_preview_card.top_level = true
+		floating_preview_card.z_index = 100
+		
+		# 🖱️ CRITICAL: Ignore mouse events so releases pass right through it!
+		floating_preview_card.mouse_filter = Control.MOUSE_FILTER_IGNORE 
 		
 		floating_preview_card.texture = item.texture
 		floating_preview_card.visible = true
@@ -1152,24 +1213,24 @@ func lift_card_from_slot(source_idx: int, item: Resource) -> void:
 		var pop_tween = create_tween()
 		pop_tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		pop_tween.tween_property(floating_preview_card, "scale", Vector2.ONE, 0.12)
-
-
 func _on_texture_button_pressed() -> void:
+	# 🔴 FLIP FROM RED (PAGE 1) TO GREEN (PAGE 2)
 	$click.pitch_scale = randf_range(0.88, 1.15)
 	$click.play()
 	
+	# Hide both buttons during flip
 	$invctrl/Control/TextureButton.visible = false
 	$invctrl/Control/TextureButton2.visible = false
 	
-	# ⚡ INSTANTLY HIDE ALL CARDS AT THE START OF FLIP
-	_set_inventory_containers_active(false)
+	# Instantly hide all card slots mid-flip
+	_hide_all_inventory_containers()
 	
 	if page_flip_tween and page_flip_tween.is_valid():
 		page_flip_tween.kill()
 
 	page_flip_tween = create_tween()
 	
-	# 1. Base Layer Setup: Keep red_left fixed, reveal green_right behind red_right
+	# 1. Base Layer Setup
 	if is_instance_valid(red_left):
 		red_left.visible = true
 		red_left.scale.x = 1.0
@@ -1179,39 +1240,39 @@ func _on_texture_button_pressed() -> void:
 		green_right.visible = true
 		green_right.z_index = 0
 		
-	# 2. Flipping Leaf: Set red_right pivot to spine (LEFT edge)
+	# 2. Fold Red Right into spine
 	red_right.z_index = 1
 	red_right.pivot_offset = Vector2(0, red_right.size.y / 2.0)
 	
-	# Shrink red_right into the spine
 	page_flip_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	page_flip_tween.tween_property(red_right, "scale:x", 0.0, 0.30)
 	
-	# 3. Midpoint: Prepare green_left at spine (RIGHT edge)
+	# 3. Midpoint Transition
 	page_flip_tween.tween_callback(func():
 		green_left.z_index = 2
 		green_left.visible = true
 		green_left.pivot_offset = Vector2(green_left.size.x, green_left.size.y / 2.0)
 		green_left.scale.x = 0.0
 		
-		# Hide red_right now that it folded shut
 		red_right.visible = false
 		red_right.scale.x = 1.0
 	)
 	
-	# Expand green_left over red_left
+	# Unfold Green Left
 	page_flip_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	page_flip_tween.tween_property(green_left, "scale:x", 1.0, 0.30)
 	
-	# 4. Finish: Show Page 2 cards ONLY when green_left is 100% unfolded
+	# 4. Finish: Show Green Page (Page 2) cards & Page 2 Button
 	page_flip_tween.tween_callback(func():
 		green_left.pivot_offset = Vector2.ZERO
 		
-		# Enable Page 2 card containers now that the flip is completely done
+		# 🟢 Show Page 2 (passives)
 		_set_inventory_containers_active(false)
 		
-		if is_instance_valid(red_left): red_left.visible = false
+		if is_instance_valid(red_left): 
+			red_left.visible = false
 		
+		# Reveal button to return to Red Page
 		var btn2 = $invctrl/Control/TextureButton2
 		btn2.visible = true
 		btn2.z_index = 10
@@ -1220,13 +1281,15 @@ func _on_texture_button_pressed() -> void:
 
 
 func _on_texture_button_2_pressed() -> void:
+	# 🟢 FLIP FROM GREEN (PAGE 2) BACK TO RED (PAGE 1)
 	$click.pitch_scale = randf_range(0.88, 1.15)
 	$click.play()
 	
+	# Hide both buttons during flip
 	$invctrl/Control/TextureButton.visible = false
 	$invctrl/Control/TextureButton2.visible = false
 
-	# ⚡ INSTANTLY HIDE ALL CARDS AT THE START OF FLIP BACK
+	# Instantly hide all card slots mid-flip
 	_hide_all_inventory_containers()
 
 	if page_flip_tween and page_flip_tween.is_valid():
@@ -1234,7 +1297,7 @@ func _on_texture_button_2_pressed() -> void:
 
 	page_flip_tween = create_tween()
 	
-	# 1. Base Layer Setup: Keep green_right fixed, reveal red_left behind green_left
+	# 1. Base Layer Setup
 	if is_instance_valid(green_right):
 		green_right.visible = true
 		green_right.scale.x = 1.0
@@ -1244,39 +1307,39 @@ func _on_texture_button_2_pressed() -> void:
 		red_left.visible = true
 		red_left.z_index = 0
 		
-	# 2. Flipping Leaf: Set green_left pivot to spine (RIGHT edge)
+	# 2. Fold Green Left into spine
 	green_left.z_index = 1
 	green_left.pivot_offset = Vector2(green_left.size.x, green_left.size.y / 2.0)
 	
-	# Shrink green_left into spine
 	page_flip_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	page_flip_tween.tween_property(green_left, "scale:x", 0.0, 0.30)
 	
-	# 3. Midpoint: Prepare red_right at spine (LEFT edge)
+	# 3. Midpoint Transition
 	page_flip_tween.tween_callback(func():
 		red_right.z_index = 2
 		red_right.visible = true
 		red_right.pivot_offset = Vector2(0, red_right.size.y / 2.0)
 		red_right.scale.x = 0.0
 		
-		# Hide green_left now that it folded shut
 		green_left.visible = false
 		green_left.scale.x = 1.0
 	)
 	
-	# Expand red_right outward
+	# Unfold Red Right
 	page_flip_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	page_flip_tween.tween_property(red_right, "scale:x", 1.0, 0.30)
 	
-	# 4. Finish: Show Page 1 cards ONLY when red_right is 100% unfolded
+	# 4. Finish: Show Red Page (Page 1) cards & Page 1 Button
 	page_flip_tween.tween_callback(func():
 		red_right.pivot_offset = Vector2.ZERO
 		
-		# Enable Page 1 card containers now that the flip back is done
+		# 🔴 Show Page 1 (melee & active storage)
 		_set_inventory_containers_active(true)
 		
-		if is_instance_valid(green_right): green_right.visible = false
+		if is_instance_valid(green_right): 
+			green_right.visible = false
 		
+		# Reveal button to flip to Green Page
 		var btn1 = $invctrl/Control/TextureButton
 		btn1.visible = true
 		btn1.z_index = 10
@@ -1286,48 +1349,66 @@ func _on_texture_button_2_pressed() -> void:
 
 # Helper function to instantly turn off all slot visibility on both pages
 func _hide_all_inventory_containers() -> void:
-	var containers: Array[Control] = []
-	if is_instance_valid(left_melee_grid): containers.append(left_melee_grid)
-	if is_instance_valid(storage_grid): containers.append(storage_grid)
-	# Add any Page 2 grid references here as well
-	
+	var containers: Array[Control] = [left_melee_grid, storage_grid, passive_grid, passive_storage]
 	for container in containers:
-		container.visible = false
-		container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		if is_instance_valid(container):
+			container.visible = false
+			container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			for slot in container.get_children():
+				if slot is Control:
+					slot.visible = false
+					slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
+
+# 2. Toggle active and passive container groups cleanly
 func _set_inventory_containers_active(is_page_1_active: bool) -> void:
-	# PAGE 1 CONTAINERS
+	# PAGE 1 CONTAINERS (Melee & Active Storage)
 	var p1_containers: Array[Control] = []
 	if is_instance_valid(left_melee_grid): p1_containers.append(left_melee_grid)
 	if is_instance_valid(storage_grid): p1_containers.append(storage_grid)
 	
-	# PAGE 2 CONTAINERS (Add Page 2 grids here if applicable)
+	# PAGE 2 CONTAINERS (Passive Grid & Passive Storage)
 	var p2_containers: Array[Control] = []
+	if is_instance_valid(passive_grid): p2_containers.append(passive_grid)
+	if is_instance_valid(passive_storage): p2_containers.append(passive_storage)
 
+	# Apply visibility states
 	_toggle_container_group(p1_containers, is_page_1_active)
 	_toggle_container_group(p2_containers, not is_page_1_active)
 
 	_reset_description_popup()
+	update_slots()
 
 
+# 3. Helper to toggle container visibility and their child slots
 func _toggle_container_group(containers: Array[Control], active: bool) -> void:
 	for container in containers:
+		if not is_instance_valid(container):
+			continue
+			
 		container.visible = active
-		# 🎯 Force grid containers to layer 5 (above red_right at layer 1)
-		container.z_index = 5
 		container.mouse_filter = Control.MOUSE_FILTER_PASS if active else Control.MOUSE_FILTER_IGNORE
 		
 		for slot in container.get_children():
 			if slot is Control:
 				slot.visible = active
-				slot.z_index = 5
 				slot.mouse_filter = Control.MOUSE_FILTER_STOP if active else Control.MOUSE_FILTER_IGNORE
 				
-				for inner_child in slot.get_children():
-					if inner_child is Control:
-						inner_child.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				# Ensure internal card visuals inside slots match the parent state
+				var card_visual = slot.get_node_or_null("CenterContainer")
+				if is_instance_valid(card_visual):
+					card_visual.visible = active
+					card_visual.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-
+func _set_children_interactive_recursive(node: Node, active: bool) -> void:
+	for child in node.get_children():
+		if child is Control:
+			child.visible = active
+			if child is TextureRect or child is Label:
+				child.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			else:
+				child.mouse_filter = Control.MOUSE_FILTER_PASS if active else Control.MOUSE_FILTER_IGNORE
+		_set_children_interactive_recursive(child, active)
 func _reset_description_popup() -> void:
 	if is_instance_valid(description_popup):
 		description_popup.visible = false

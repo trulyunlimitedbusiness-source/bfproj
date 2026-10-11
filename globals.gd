@@ -10,3 +10,4 @@ var campfire: Node2D = null
 var inventory: CanvasLayer = null
 var left_hand_hud_container: Node = null
 var right_hand_hud_container: Node = null
+var enemy: CharacterBody2D = null

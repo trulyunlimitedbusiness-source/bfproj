@@ -280,7 +280,7 @@ scale_curve = SubResource("CurveTexture_sr3fy")
 color_ramp = SubResource("GradientTexture1D_5vi7u")
 
 [node name="liquid" type="CharacterBody2D" unique_id=567573201]
-z_index = 2
+z_index = 4
 collision_layer = 4
 script = ExtResource("1_ri14k")
 

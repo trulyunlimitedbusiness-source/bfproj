@@ -102,96 +102,108 @@ mouse_filter = 2
 
 [node name="Panel" parent="invctrl/GridContainer" unique_id=1928976634 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
+offset_top = -3.0
+offset_right = 100.0
+offset_bottom = 97.0
 
 [node name="Panel2" parent="invctrl/GridContainer" unique_id=560372446 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 116.0
+offset_top = -3.0
 offset_right = 216.0
+offset_bottom = 97.0
 
 [node name="Panel3" parent="invctrl/GridContainer" unique_id=950692062 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 232.0
+offset_top = -3.0
 offset_right = 332.0
+offset_bottom = 97.0
 
 [node name="Panel4" parent="invctrl/GridContainer" unique_id=1484538041 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 348.0
+offset_top = -3.0
 offset_right = 448.0
+offset_bottom = 97.0
 
 [node name="Panel5" parent="invctrl/GridContainer" unique_id=1283923450 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 464.0
+offset_top = -3.0
 offset_right = 564.0
+offset_bottom = 97.0
 
 [node name="Panel6" parent="invctrl/GridContainer" unique_id=909222247 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 580.0
+offset_top = -3.0
 offset_right = 680.0
+offset_bottom = 97.0
 
 [node name="Panel7" parent="invctrl/GridContainer" unique_id=8108641 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 696.0
+offset_top = -3.0
 offset_right = 796.0
+offset_bottom = 97.0
 
 [node name="Panel8" parent="invctrl/GridContainer" unique_id=629724247 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 812.0
+offset_top = -3.0
 offset_right = 912.0
+offset_bottom = 97.0
 
 [node name="Panel9" parent="invctrl/GridContainer" unique_id=145163039 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 928.0
+offset_top = -3.0
 offset_right = 1028.0
+offset_bottom = 97.0
 
 [node name="Panel10" parent="invctrl/GridContainer" unique_id=245238388 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1044.0
+offset_top = -3.0
 offset_right = 1144.0
+offset_bottom = 97.0
 
 [node name="Panel11" parent="invctrl/GridContainer" unique_id=1620779366 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1160.0
+offset_top = -3.0
 offset_right = 1260.0
+offset_bottom = 97.0
 
 [node name="Panel12" parent="invctrl/GridContainer" unique_id=730752524 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1276.0
+offset_top = -3.0
 offset_right = 1376.0
+offset_bottom = 97.0
 
 [node name="Panel13" parent="invctrl/GridContainer" unique_id=553306806 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_top = 116.0
+offset_right = 100.0
 offset_bottom = 216.0
 
 [node name="Panel14" parent="invctrl/GridContainer" unique_id=2042788620 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 116.0
 offset_top = 116.0
@@ -200,7 +212,6 @@ offset_bottom = 216.0
 
 [node name="Panel15" parent="invctrl/GridContainer" unique_id=1451595858 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 232.0
 offset_top = 116.0
@@ -209,7 +220,6 @@ offset_bottom = 216.0
 
 [node name="Panel16" parent="invctrl/GridContainer" unique_id=878085411 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 348.0
 offset_top = 116.0
@@ -218,7 +228,6 @@ offset_bottom = 216.0
 
 [node name="Panel17" parent="invctrl/GridContainer" unique_id=1884828981 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 464.0
 offset_top = 116.0
@@ -227,7 +236,6 @@ offset_bottom = 216.0
 
 [node name="Panel18" parent="invctrl/GridContainer" unique_id=1417056777 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 580.0
 offset_top = 116.0
@@ -236,7 +244,6 @@ offset_bottom = 216.0
 
 [node name="Panel19" parent="invctrl/GridContainer" unique_id=1217553463 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 696.0
 offset_top = 116.0
@@ -245,7 +252,6 @@ offset_bottom = 216.0
 
 [node name="Panel20" parent="invctrl/GridContainer" unique_id=982824840 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 812.0
 offset_top = 116.0
@@ -254,7 +260,6 @@ offset_bottom = 216.0
 
 [node name="Panel21" parent="invctrl/GridContainer" unique_id=1403376161 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 928.0
 offset_top = 116.0
@@ -263,7 +268,6 @@ offset_bottom = 216.0
 
 [node name="Panel22" parent="invctrl/GridContainer" unique_id=1503426373 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1044.0
 offset_top = 116.0
@@ -272,7 +276,6 @@ offset_bottom = 216.0
 
 [node name="Panel23" parent="invctrl/GridContainer" unique_id=360353725 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1160.0
 offset_top = 116.0
@@ -281,7 +284,6 @@ offset_bottom = 216.0
 
 [node name="Panel24" parent="invctrl/GridContainer" unique_id=1057716322 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1276.0
 offset_top = 116.0
@@ -290,14 +292,13 @@ offset_bottom = 216.0
 
 [node name="Panel25" parent="invctrl/GridContainer" unique_id=964630482 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_top = 232.0
+offset_right = 100.0
 offset_bottom = 332.0
 
 [node name="Panel26" parent="invctrl/GridContainer" unique_id=1594833872 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 116.0
 offset_top = 232.0
@@ -306,7 +307,6 @@ offset_bottom = 332.0
 
 [node name="Panel27" parent="invctrl/GridContainer" unique_id=1789166094 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 232.0
 offset_top = 232.0
@@ -315,7 +315,6 @@ offset_bottom = 332.0
 
 [node name="Panel28" parent="invctrl/GridContainer" unique_id=1690937550 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 348.0
 offset_top = 232.0
@@ -324,7 +323,6 @@ offset_bottom = 332.0
 
 [node name="Panel29" parent="invctrl/GridContainer" unique_id=962653537 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 464.0
 offset_top = 232.0
@@ -333,7 +331,6 @@ offset_bottom = 332.0
 
 [node name="Panel30" parent="invctrl/GridContainer" unique_id=198260509 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 580.0
 offset_top = 232.0
@@ -342,7 +339,6 @@ offset_bottom = 332.0
 
 [node name="Panel31" parent="invctrl/GridContainer" unique_id=130828256 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 696.0
 offset_top = 232.0
@@ -351,7 +347,6 @@ offset_bottom = 332.0
 
 [node name="Panel32" parent="invctrl/GridContainer" unique_id=667728814 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 812.0
 offset_top = 232.0
@@ -360,7 +355,6 @@ offset_bottom = 332.0
 
 [node name="Panel33" parent="invctrl/GridContainer" unique_id=1071198276 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 928.0
 offset_top = 232.0
@@ -369,7 +363,6 @@ offset_bottom = 332.0
 
 [node name="Panel34" parent="invctrl/GridContainer" unique_id=919787177 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1044.0
 offset_top = 232.0
@@ -378,7 +371,6 @@ offset_bottom = 332.0
 
 [node name="Panel35" parent="invctrl/GridContainer" unique_id=1183272094 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1160.0
 offset_top = 232.0
@@ -387,7 +379,6 @@ offset_bottom = 332.0
 
 [node name="Panel36" parent="invctrl/GridContainer" unique_id=95890496 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1276.0
 offset_top = 232.0
@@ -396,323 +387,290 @@ offset_bottom = 332.0
 
 [node name="Panel37" parent="invctrl/GridContainer" unique_id=2065001426 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_top = 348.0
-offset_bottom = 448.0
+offset_top = 349.0
+offset_right = 100.0
+offset_bottom = 449.0
 
 [node name="Panel38" parent="invctrl/GridContainer" unique_id=483185903 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 116.0
-offset_top = 348.0
+offset_top = 349.0
 offset_right = 216.0
-offset_bottom = 448.0
+offset_bottom = 449.0
 
 [node name="Panel39" parent="invctrl/GridContainer" unique_id=607911202 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 232.0
-offset_top = 348.0
+offset_top = 349.0
 offset_right = 332.0
-offset_bottom = 448.0
+offset_bottom = 449.0
 
 [node name="Panel40" parent="invctrl/GridContainer" unique_id=396499526 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 348.0
-offset_top = 348.0
+offset_top = 349.0
 offset_right = 448.0
-offset_bottom = 448.0
+offset_bottom = 449.0
 
 [node name="Panel41" parent="invctrl/GridContainer" unique_id=573056500 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 464.0
-offset_top = 348.0
+offset_top = 349.0
 offset_right = 564.0
-offset_bottom = 448.0
+offset_bottom = 449.0
 
 [node name="Panel42" parent="invctrl/GridContainer" unique_id=138191581 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 580.0
-offset_top = 348.0
+offset_top = 349.0
 offset_right = 680.0
-offset_bottom = 448.0
+offset_bottom = 449.0
 
 [node name="Panel43" parent="invctrl/GridContainer" unique_id=1145356717 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 696.0
-offset_top = 348.0
+offset_top = 349.0
 offset_right = 796.0
-offset_bottom = 448.0
+offset_bottom = 449.0
 
 [node name="Panel44" parent="invctrl/GridContainer" unique_id=455908098 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 812.0
-offset_top = 348.0
+offset_top = 349.0
 offset_right = 912.0
-offset_bottom = 448.0
+offset_bottom = 449.0
 
 [node name="Panel45" parent="invctrl/GridContainer" unique_id=1535672042 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 928.0
-offset_top = 348.0
+offset_top = 349.0
 offset_right = 1028.0
-offset_bottom = 448.0
+offset_bottom = 449.0
 
 [node name="Panel46" parent="invctrl/GridContainer" unique_id=1655074497 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1044.0
-offset_top = 348.0
+offset_top = 349.0
 offset_right = 1144.0
-offset_bottom = 448.0
+offset_bottom = 449.0
 
 [node name="Panel47" parent="invctrl/GridContainer" unique_id=633968161 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1160.0
-offset_top = 348.0
+offset_top = 349.0
 offset_right = 1260.0
-offset_bottom = 448.0
+offset_bottom = 449.0
 
 [node name="Panel48" parent="invctrl/GridContainer" unique_id=1823182085 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1276.0
-offset_top = 348.0
+offset_top = 349.0
 offset_right = 1376.0
-offset_bottom = 448.0
+offset_bottom = 449.0
 
 [node name="Panel49" parent="invctrl/GridContainer" unique_id=1427056678 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_top = 464.0
-offset_bottom = 564.0
+offset_top = 467.0
+offset_right = 100.0
+offset_bottom = 567.0
 
 [node name="Panel50" parent="invctrl/GridContainer" unique_id=146686463 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 116.0
-offset_top = 464.0
+offset_top = 467.0
 offset_right = 216.0
-offset_bottom = 564.0
+offset_bottom = 567.0
 
 [node name="Panel51" parent="invctrl/GridContainer" unique_id=1447915608 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 232.0
-offset_top = 464.0
+offset_top = 467.0
 offset_right = 332.0
-offset_bottom = 564.0
+offset_bottom = 567.0
 
 [node name="Panel52" parent="invctrl/GridContainer" unique_id=1379582814 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 348.0
-offset_top = 464.0
+offset_top = 467.0
 offset_right = 448.0
-offset_bottom = 564.0
+offset_bottom = 567.0
 
 [node name="Panel53" parent="invctrl/GridContainer" unique_id=1960193072 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 464.0
-offset_top = 464.0
+offset_top = 467.0
 offset_right = 564.0
-offset_bottom = 564.0
+offset_bottom = 567.0
 
 [node name="Panel54" parent="invctrl/GridContainer" unique_id=1783694678 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 580.0
-offset_top = 464.0
+offset_top = 467.0
 offset_right = 680.0
-offset_bottom = 564.0
+offset_bottom = 567.0
 
 [node name="Panel55" parent="invctrl/GridContainer" unique_id=1700217997 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 696.0
-offset_top = 464.0
+offset_top = 467.0
 offset_right = 796.0
-offset_bottom = 564.0
+offset_bottom = 567.0
 
 [node name="Panel56" parent="invctrl/GridContainer" unique_id=1437817341 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 812.0
-offset_top = 464.0
+offset_top = 467.0
 offset_right = 912.0
-offset_bottom = 564.0
+offset_bottom = 567.0
 
 [node name="Panel57" parent="invctrl/GridContainer" unique_id=1237162817 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 928.0
-offset_top = 464.0
+offset_top = 467.0
 offset_right = 1028.0
-offset_bottom = 564.0
+offset_bottom = 567.0
 
 [node name="Panel58" parent="invctrl/GridContainer" unique_id=1579494810 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1044.0
-offset_top = 464.0
+offset_top = 467.0
 offset_right = 1144.0
-offset_bottom = 564.0
+offset_bottom = 567.0
 
 [node name="Panel59" parent="invctrl/GridContainer" unique_id=866626707 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1160.0
-offset_top = 464.0
+offset_top = 467.0
 offset_right = 1260.0
-offset_bottom = 564.0
+offset_bottom = 567.0
 
 [node name="Panel60" parent="invctrl/GridContainer" unique_id=1560140747 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1276.0
-offset_top = 464.0
+offset_top = 467.0
 offset_right = 1376.0
-offset_bottom = 564.0
+offset_bottom = 567.0
 
 [node name="Panel61" parent="invctrl/GridContainer" unique_id=1874677589 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_top = 580.0
-offset_bottom = 680.0
+offset_top = 587.0
+offset_right = 100.0
+offset_bottom = 687.0
 
 [node name="Panel62" parent="invctrl/GridContainer" unique_id=1122474641 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 116.0
-offset_top = 580.0
+offset_top = 587.0
 offset_right = 216.0
-offset_bottom = 680.0
+offset_bottom = 687.0
 
 [node name="Panel63" parent="invctrl/GridContainer" unique_id=1477646412 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 232.0
-offset_top = 580.0
+offset_top = 587.0
 offset_right = 332.0
-offset_bottom = 680.0
+offset_bottom = 687.0
 
 [node name="Panel64" parent="invctrl/GridContainer" unique_id=2092262456 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 348.0
-offset_top = 580.0
+offset_top = 587.0
 offset_right = 448.0
-offset_bottom = 680.0
+offset_bottom = 687.0
 
 [node name="Panel65" parent="invctrl/GridContainer" unique_id=685837929 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 464.0
-offset_top = 580.0
+offset_top = 587.0
 offset_right = 564.0
-offset_bottom = 680.0
+offset_bottom = 687.0
 
 [node name="Panel66" parent="invctrl/GridContainer" unique_id=1798878124 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 580.0
-offset_top = 580.0
+offset_top = 587.0
 offset_right = 680.0
-offset_bottom = 680.0
+offset_bottom = 687.0
 
 [node name="Panel67" parent="invctrl/GridContainer" unique_id=52498273 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 696.0
-offset_top = 580.0
+offset_top = 587.0
 offset_right = 796.0
-offset_bottom = 680.0
+offset_bottom = 687.0
 
 [node name="Panel68" parent="invctrl/GridContainer" unique_id=963023301 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 812.0
-offset_top = 580.0
+offset_top = 587.0
 offset_right = 912.0
-offset_bottom = 680.0
+offset_bottom = 687.0
 
 [node name="Panel69" parent="invctrl/GridContainer" unique_id=2084748286 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 928.0
-offset_top = 580.0
+offset_top = 587.0
 offset_right = 1028.0
-offset_bottom = 680.0
+offset_bottom = 687.0
 
 [node name="Panel70" parent="invctrl/GridContainer" unique_id=1433129870 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1044.0
-offset_top = 580.0
+offset_top = 587.0
 offset_right = 1144.0
-offset_bottom = 680.0
+offset_bottom = 687.0
 
 [node name="Panel71" parent="invctrl/GridContainer" unique_id=1523499844 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1160.0
-offset_top = 580.0
+offset_top = 587.0
 offset_right = 1260.0
-offset_bottom = 680.0
+offset_bottom = 687.0
 
 [node name="Panel72" parent="invctrl/GridContainer" unique_id=1195132366 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1276.0
-offset_top = 580.0
+offset_top = 587.0
 offset_right = 1376.0
-offset_bottom = 680.0
+offset_bottom = 687.0
 
-[node name="StorageGrid" type="Control" parent="invctrl" unique_id=418623688]
+[node name="StorageGrid" type="Control" parent="invctrl" unique_id=1514707553]
 z_index = 1
 custom_minimum_size = Vector2(1644.06, 180.785)
 layout_mode = 1
@@ -720,151 +678,152 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 241.19
+offset_left = 245.19
 offset_top = -219.685
-offset_right = -34.75
-offset_bottom = -36.90149
+offset_right = -16.810059
+offset_bottom = 1856.315
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 
 [node name="Panel" parent="invctrl/StorageGrid" unique_id=1499368496 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
 
 [node name="Panel2" parent="invctrl/StorageGrid" unique_id=698876544 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 70.0
-offset_right = 170.0
+offset_left = 72.0
+offset_right = 152.0
+offset_bottom = 100.0
 
 [node name="Panel3" parent="invctrl/StorageGrid" unique_id=915883868 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 140.0
-offset_right = 240.0
+offset_left = 144.0
+offset_right = 224.0
+offset_bottom = 100.0
 
 [node name="Panel4" parent="invctrl/StorageGrid" unique_id=1081290435 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 210.0
-offset_right = 310.0
+offset_left = 216.0
+offset_right = 296.0
+offset_bottom = 100.0
 
 [node name="Panel5" parent="invctrl/StorageGrid" unique_id=1396605692 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 280.0
-offset_right = 380.0
+offset_left = 288.0
+offset_right = 368.0
+offset_bottom = 100.0
 
 [node name="Panel6" parent="invctrl/StorageGrid" unique_id=253790727 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 350.0
-offset_right = 450.0
+offset_left = 360.0
+offset_right = 440.0
+offset_bottom = 100.0
 
 [node name="Panel7" parent="invctrl/StorageGrid" unique_id=1588579107 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 420.0
-offset_right = 520.0
+offset_left = 432.0
+offset_right = 512.0
+offset_bottom = 100.0
 
 [node name="Panel8" parent="invctrl/StorageGrid" unique_id=2123328036 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 490.0
-offset_right = 590.0
+offset_left = 504.0
+offset_right = 584.0
+offset_bottom = 100.0
 
 [node name="Panel9" parent="invctrl/StorageGrid" unique_id=1023203342 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 560.0
-offset_right = 660.0
+offset_left = 576.0
+offset_right = 656.0
+offset_bottom = 100.0
 
 [node name="Panel10" parent="invctrl/StorageGrid" unique_id=650210184 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 630.0
-offset_right = 730.0
+offset_left = 648.0
+offset_right = 728.0
+offset_bottom = 100.0
 
 [node name="Panel11" parent="invctrl/StorageGrid" unique_id=332545245 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 700.0
+offset_left = 720.0
 offset_right = 800.0
+offset_bottom = 100.0
 
 [node name="Panel12" parent="invctrl/StorageGrid" unique_id=1280976616 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 770.0
-offset_right = 870.0
+offset_left = 792.0
+offset_right = 872.0
+offset_bottom = 100.0
 
 [node name="Panel13" parent="invctrl/StorageGrid" unique_id=1728219079 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 840.0
-offset_right = 940.0
+offset_left = 864.0
+offset_right = 944.0
+offset_bottom = 100.0
 
 [node name="Panel14" parent="invctrl/StorageGrid" unique_id=1021572966 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 910.0
-offset_right = 1010.0
+offset_left = 936.0
+offset_right = 1016.0
+offset_bottom = 100.0
 
 [node name="Panel15" parent="invctrl/StorageGrid" unique_id=1987197917 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 980.0
-offset_right = 1080.0
+offset_left = 1008.0
+offset_right = 1088.0
+offset_bottom = 100.0
 
 [node name="Panel16" parent="invctrl/StorageGrid" unique_id=901000105 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 1050.0
-offset_right = 1150.0
+offset_left = 1080.0
+offset_right = 1160.0
+offset_bottom = 100.0
 
 [node name="Panel17" parent="invctrl/StorageGrid" unique_id=1683879057 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 1120.0
-offset_right = 1220.0
+offset_left = 1152.0
+offset_right = 1232.0
+offset_bottom = 100.0
 
 [node name="Panel18" parent="invctrl/StorageGrid" unique_id=89847357 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 1190.0
-offset_right = 1290.0
+offset_left = 1224.0
+offset_right = 1304.0
+offset_bottom = 100.0
 
-[node name="Panel19" parent="invctrl/StorageGrid" unique_id=280085016 instance=ExtResource("3_yaj7b")]
+[node name="Panel19" parent="invctrl/StorageGrid" unique_id=1686746875 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 1260.0
-offset_right = 1360.0
+offset_left = 1296.0
+offset_right = 1376.0
+offset_bottom = 100.0
 
-[node name="Panel20" parent="invctrl/StorageGrid" unique_id=1161129142 instance=ExtResource("3_yaj7b")]
+[node name="Panel20" parent="invctrl/StorageGrid" unique_id=884188903 instance=ExtResource("3_yaj7b")]
 z_index = 1
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 1330.0
-offset_right = 1430.0
+offset_left = 1368.0
+offset_right = 1448.0
+offset_bottom = 100.0
 
 [node name="Control" type="Control" parent="invctrl" unique_id=538861593]
 z_index = -3
@@ -991,6 +950,549 @@ position = Vector2(30, 50.00003)
 scale = Vector2(8.624996, 9.750002)
 texture = ExtResource("9_gujlu")
 flip_h = true
+
+[node name="passivegrid" type="Control" parent="invctrl" unique_id=993162823]
+custom_minimum_size = Vector2(100, 100)
+anchors_preset = 0
+offset_left = 265.0
+offset_top = 171.0
+offset_right = 1665.0
+offset_bottom = 860.9991
+mouse_filter = 2
+
+[node name="Panel" parent="invctrl/passivegrid" unique_id=1343954951 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_top = -3.0
+offset_right = 100.0
+offset_bottom = 97.0
+
+[node name="Panel2" parent="invctrl/passivegrid" unique_id=1991275258 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 116.0
+offset_top = -3.0
+offset_right = 216.0
+offset_bottom = 97.0
+
+[node name="Panel3" parent="invctrl/passivegrid" unique_id=1940607748 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 232.0
+offset_top = -3.0
+offset_right = 332.0
+offset_bottom = 97.0
+
+[node name="Panel4" parent="invctrl/passivegrid" unique_id=1098736978 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 348.0
+offset_top = -3.0
+offset_right = 448.0
+offset_bottom = 97.0
+
+[node name="Panel5" parent="invctrl/passivegrid" unique_id=1083168314 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 464.0
+offset_top = -3.0
+offset_right = 564.0
+offset_bottom = 97.0
+
+[node name="Panel6" parent="invctrl/passivegrid" unique_id=592256306 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 580.0
+offset_top = -3.0
+offset_right = 680.0
+offset_bottom = 97.0
+
+[node name="Panel7" parent="invctrl/passivegrid" unique_id=2119937672 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 696.0
+offset_top = -3.0
+offset_right = 796.0
+offset_bottom = 97.0
+
+[node name="Panel8" parent="invctrl/passivegrid" unique_id=354578358 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 812.0
+offset_top = -3.0
+offset_right = 912.0
+offset_bottom = 97.0
+
+[node name="Panel9" parent="invctrl/passivegrid" unique_id=460330085 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 928.0
+offset_top = -3.0
+offset_right = 1028.0
+offset_bottom = 97.0
+
+[node name="Panel10" parent="invctrl/passivegrid" unique_id=1500652946 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1044.0
+offset_top = -3.0
+offset_right = 1144.0
+offset_bottom = 97.0
+
+[node name="Panel11" parent="invctrl/passivegrid" unique_id=620720983 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1160.0
+offset_top = -3.0
+offset_right = 1260.0
+offset_bottom = 97.0
+
+[node name="Panel12" parent="invctrl/passivegrid" unique_id=36984492 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1276.0
+offset_top = -3.0
+offset_right = 1376.0
+offset_bottom = 97.0
+
+[node name="Panel13" parent="invctrl/passivegrid" unique_id=1033485110 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_top = 116.0
+offset_right = 100.0
+offset_bottom = 216.0
+
+[node name="Panel14" parent="invctrl/passivegrid" unique_id=1112808817 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 116.0
+offset_top = 116.0
+offset_right = 216.0
+offset_bottom = 216.0
+
+[node name="Panel15" parent="invctrl/passivegrid" unique_id=1047265086 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 232.0
+offset_top = 116.0
+offset_right = 332.0
+offset_bottom = 216.0
+
+[node name="Panel16" parent="invctrl/passivegrid" unique_id=1626386693 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 348.0
+offset_top = 116.0
+offset_right = 448.0
+offset_bottom = 216.0
+
+[node name="Panel17" parent="invctrl/passivegrid" unique_id=1934979316 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 464.0
+offset_top = 116.0
+offset_right = 564.0
+offset_bottom = 216.0
+
+[node name="Panel18" parent="invctrl/passivegrid" unique_id=404428570 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 580.0
+offset_top = 116.0
+offset_right = 680.0
+offset_bottom = 216.0
+
+[node name="Panel19" parent="invctrl/passivegrid" unique_id=1059194636 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 696.0
+offset_top = 116.0
+offset_right = 796.0
+offset_bottom = 216.0
+
+[node name="Panel20" parent="invctrl/passivegrid" unique_id=1405025314 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 812.0
+offset_top = 116.0
+offset_right = 912.0
+offset_bottom = 216.0
+
+[node name="Panel21" parent="invctrl/passivegrid" unique_id=370552490 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 928.0
+offset_top = 116.0
+offset_right = 1028.0
+offset_bottom = 216.0
+
+[node name="Panel22" parent="invctrl/passivegrid" unique_id=2006048475 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1044.0
+offset_top = 116.0
+offset_right = 1144.0
+offset_bottom = 216.0
+
+[node name="Panel23" parent="invctrl/passivegrid" unique_id=898039489 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1160.0
+offset_top = 116.0
+offset_right = 1260.0
+offset_bottom = 216.0
+
+[node name="Panel24" parent="invctrl/passivegrid" unique_id=441272601 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1276.0
+offset_top = 116.0
+offset_right = 1376.0
+offset_bottom = 216.0
+
+[node name="Panel25" parent="invctrl/passivegrid" unique_id=1520350444 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_top = 232.0
+offset_right = 100.0
+offset_bottom = 332.0
+
+[node name="Panel26" parent="invctrl/passivegrid" unique_id=832125304 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 116.0
+offset_top = 232.0
+offset_right = 216.0
+offset_bottom = 332.0
+
+[node name="Panel27" parent="invctrl/passivegrid" unique_id=1846333762 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 232.0
+offset_top = 232.0
+offset_right = 332.0
+offset_bottom = 332.0
+
+[node name="Panel28" parent="invctrl/passivegrid" unique_id=473655383 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 348.0
+offset_top = 232.0
+offset_right = 448.0
+offset_bottom = 332.0
+
+[node name="Panel29" parent="invctrl/passivegrid" unique_id=1612168690 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 464.0
+offset_top = 232.0
+offset_right = 564.0
+offset_bottom = 332.0
+
+[node name="Panel30" parent="invctrl/passivegrid" unique_id=1640711750 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 580.0
+offset_top = 232.0
+offset_right = 680.0
+offset_bottom = 332.0
+
+[node name="Panel31" parent="invctrl/passivegrid" unique_id=1253340821 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 696.0
+offset_top = 232.0
+offset_right = 796.0
+offset_bottom = 332.0
+
+[node name="Panel32" parent="invctrl/passivegrid" unique_id=675745209 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 812.0
+offset_top = 232.0
+offset_right = 912.0
+offset_bottom = 332.0
+
+[node name="Panel33" parent="invctrl/passivegrid" unique_id=1998837644 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 928.0
+offset_top = 232.0
+offset_right = 1028.0
+offset_bottom = 332.0
+
+[node name="Panel34" parent="invctrl/passivegrid" unique_id=1813194609 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1044.0
+offset_top = 232.0
+offset_right = 1144.0
+offset_bottom = 332.0
+
+[node name="Panel35" parent="invctrl/passivegrid" unique_id=242389392 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1160.0
+offset_top = 232.0
+offset_right = 1260.0
+offset_bottom = 332.0
+
+[node name="Panel36" parent="invctrl/passivegrid" unique_id=1056323734 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1276.0
+offset_top = 232.0
+offset_right = 1376.0
+offset_bottom = 332.0
+
+[node name="Panel37" parent="invctrl/passivegrid" unique_id=350582716 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_top = 349.0
+offset_right = 100.0
+offset_bottom = 449.0
+
+[node name="Panel38" parent="invctrl/passivegrid" unique_id=278890872 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 116.0
+offset_top = 349.0
+offset_right = 216.0
+offset_bottom = 449.0
+
+[node name="Panel39" parent="invctrl/passivegrid" unique_id=812199126 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 232.0
+offset_top = 349.0
+offset_right = 332.0
+offset_bottom = 449.0
+
+[node name="Panel40" parent="invctrl/passivegrid" unique_id=2104626239 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 348.0
+offset_top = 349.0
+offset_right = 448.0
+offset_bottom = 449.0
+
+[node name="Panel41" parent="invctrl/passivegrid" unique_id=619591577 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 464.0
+offset_top = 349.0
+offset_right = 564.0
+offset_bottom = 449.0
+
+[node name="Panel42" parent="invctrl/passivegrid" unique_id=1520887906 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 580.0
+offset_top = 349.0
+offset_right = 680.0
+offset_bottom = 449.0
+
+[node name="Panel43" parent="invctrl/passivegrid" unique_id=1912940040 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 696.0
+offset_top = 349.0
+offset_right = 796.0
+offset_bottom = 449.0
+
+[node name="Panel44" parent="invctrl/passivegrid" unique_id=178346799 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 812.0
+offset_top = 349.0
+offset_right = 912.0
+offset_bottom = 449.0
+
+[node name="Panel45" parent="invctrl/passivegrid" unique_id=2072270929 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 928.0
+offset_top = 349.0
+offset_right = 1028.0
+offset_bottom = 449.0
+
+[node name="Panel46" parent="invctrl/passivegrid" unique_id=1799555461 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1044.0
+offset_top = 349.0
+offset_right = 1144.0
+offset_bottom = 449.0
+
+[node name="Panel47" parent="invctrl/passivegrid" unique_id=1684420675 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1160.0
+offset_top = 349.0
+offset_right = 1260.0
+offset_bottom = 449.0
+
+[node name="Panel48" parent="invctrl/passivegrid" unique_id=2028777090 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1276.0
+offset_top = 349.0
+offset_right = 1376.0
+offset_bottom = 449.0
+
+[node name="passivestorage" type="Control" parent="invctrl" unique_id=1636420893]
+custom_minimum_size = Vector2(1644.06, 180.785)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 245.19
+offset_top = -219.685
+offset_right = -16.810059
+offset_bottom = 1856.315
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Panel" parent="invctrl/passivestorage" unique_id=1875992347 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+
+[node name="Panel2" parent="invctrl/passivestorage" unique_id=1684683941 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 72.0
+offset_right = 152.0
+offset_bottom = 100.0
+
+[node name="Panel3" parent="invctrl/passivestorage" unique_id=689806250 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 144.0
+offset_right = 224.0
+offset_bottom = 100.0
+
+[node name="Panel4" parent="invctrl/passivestorage" unique_id=1174897845 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 216.0
+offset_right = 296.0
+offset_bottom = 100.0
+
+[node name="Panel5" parent="invctrl/passivestorage" unique_id=1266638805 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 288.0
+offset_right = 368.0
+offset_bottom = 100.0
+
+[node name="Panel6" parent="invctrl/passivestorage" unique_id=572556854 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 360.0
+offset_right = 440.0
+offset_bottom = 100.0
+
+[node name="Panel7" parent="invctrl/passivestorage" unique_id=1156388051 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 432.0
+offset_right = 512.0
+offset_bottom = 100.0
+
+[node name="Panel8" parent="invctrl/passivestorage" unique_id=42139257 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 504.0
+offset_right = 584.0
+offset_bottom = 100.0
+
+[node name="Panel9" parent="invctrl/passivestorage" unique_id=1753243317 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 576.0
+offset_right = 656.0
+offset_bottom = 100.0
+
+[node name="Panel10" parent="invctrl/passivestorage" unique_id=2022833849 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 648.0
+offset_right = 728.0
+offset_bottom = 100.0
+
+[node name="Panel11" parent="invctrl/passivestorage" unique_id=948305973 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 720.0
+offset_right = 800.0
+offset_bottom = 100.0
+
+[node name="Panel12" parent="invctrl/passivestorage" unique_id=1438180696 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 792.0
+offset_right = 872.0
+offset_bottom = 100.0
+
+[node name="Panel13" parent="invctrl/passivestorage" unique_id=970064324 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 864.0
+offset_right = 944.0
+offset_bottom = 100.0
+
+[node name="Panel14" parent="invctrl/passivestorage" unique_id=589845189 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 936.0
+offset_right = 1016.0
+offset_bottom = 100.0
+
+[node name="Panel15" parent="invctrl/passivestorage" unique_id=772363281 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1008.0
+offset_right = 1088.0
+offset_bottom = 100.0
+
+[node name="Panel16" parent="invctrl/passivestorage" unique_id=578081515 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1080.0
+offset_right = 1160.0
+offset_bottom = 100.0
+
+[node name="Panel17" parent="invctrl/passivestorage" unique_id=1873975037 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1152.0
+offset_right = 1232.0
+offset_bottom = 100.0
+
+[node name="Panel18" parent="invctrl/passivestorage" unique_id=630132649 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1224.0
+offset_right = 1304.0
+offset_bottom = 100.0
+
+[node name="Panel19" parent="invctrl/passivestorage" unique_id=780582743 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1296.0
+offset_right = 1376.0
+offset_bottom = 100.0
+
+[node name="Panel20" parent="invctrl/passivestorage" unique_id=1614434784 instance=ExtResource("3_yaj7b")]
+z_index = 1
+layout_mode = 0
+offset_left = 1368.0
+offset_right = 1448.0
+offset_bottom = 100.0
 
 [connection signal="mouse_entered" from="invctrl/Control/TextureButton" to="." method="_on_texture_button_mouse_entered"]
 [connection signal="mouse_exited" from="invctrl/Control/TextureButton" to="." method="_on_texture_button_mouse_exited"]

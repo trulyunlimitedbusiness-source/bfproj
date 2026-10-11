@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="InvItem" format=3 uid="uid://8sm81u3ycqev"]
+
+[ext_resource type="Script" uid="uid://c3l6sti2a6aat" path="res://upgrade system/inventory_item.gd" id="1_o0061"]
+[ext_resource type="Texture2D" uid="uid://clgysgecp41w" path="res://upgrade system/sprites/icons/enemyknockback.png" id="2_pedjx"]
+
+[resource]
+script = ExtResource("1_o0061")
+name = "enemyknockbackicon"
+texture = ExtResource("2_pedjx")
+card_sprite_frame = 13
+description = "Enemy Knockback:
+
+Enemy knockback is 
+increased by 1.5x"
+metadata/_custom_type_script = "uid://c3l6sti2a6aat"
